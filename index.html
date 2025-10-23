@@ -3,453 +3,798 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infographic: ข้อมูลหลักสูตรและจำนวนรับนักเรียน ม.1</title>
+    <title>เตรียมสอบเข้า ม.1 โรงเรียนสตรีวิทยา</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Font Mali -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #F8F8FF;
-        }
-        .card {
-            background-color: #FFFFFF;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            padding: 2rem;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 650px; /* Increased max-width */
-            height: 60vh;      /* Increased height */
-            max-height: 500px; /* Increased max-height */
-            margin-left: auto;
-            margin-right: auto;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 65vh;
-                max-height: 550px;
-            }
-        }
-        .tab-button.active {
+            font-family: 'Mali', cursive;
             background-color: #ffffff;
-            color: #118AB2;
+            font-weight: 500;
+        }
+        
+        /* Watermark */
+        body::before {
+            content: "ครอบครัวยอดนารี❤️สตรีวิทยา";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 5rem;
             font-weight: 700;
-            border-bottom: 3px solid #118AB2;
+            color: rgba(0, 0, 0, 0.03);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
         }
-        .sub-tab-button.active {
-            background-color: #118AB2;
-            color: #FFFFFF;
+
+        /* --- [NEW] Redesigned Tabs --- */
+        
+        /* Main Tabs */
+        .main-tab-btn {
+            @apply px-6 sm:px-10 py-4 sm:py-5 text-base sm:text-lg rounded-2xl transition-all duration-300 ease-in-out transform;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            color: #9f1239;
+            border: 2px solid #fbcfe8;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            font-family: 'Mali', cursive;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        .main-tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        .main-tab-btn:hover::before {
+            left: 100%;
+        }
+        .main-tab-btn:hover {
+            @apply shadow-xl transform -translate-y-1;
+            border-color: #f9a8d4;
+        }
+        .main-tab-btn.active {
+            background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+            color: #ffffff;
+            @apply font-bold shadow-2xl scale-105;
+            border-color: #ec4899;
+        }
+        
+        /* Nested Tabs */
+        .nested-tabs-container {
+            @apply flex flex-wrap justify-center gap-3 sm:gap-4 mb-6;
+        }
+        .nested-tab-btn {
+            @apply px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base rounded-2xl transition-all duration-300 ease-in-out transform;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            color: #1e40af;
+            border: 2px solid #bfdbfe;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            font-family: 'Mali', cursive;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        .nested-tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        .nested-tab-btn:hover::before {
+            left: 100%;
+        }
+        .nested-tab-btn:hover {
+            @apply shadow-xl transform -translate-y-1;
+            border-color: #93c5fd;
+        }
+        .nested-tab-btn.active {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+            @apply font-bold shadow-2xl scale-105;
+            border-color: #60a5fa;
+        }
+        
+        /* Sub-Nested Tabs */
+        .sub-nested-tabs-container {
+            @apply flex flex-wrap justify-center gap-3 sm:gap-4 mb-6;
+        }
+        .sub-nested-tab-btn {
+            @apply px-5 sm:px-6 py-3 text-sm rounded-2xl transition-all duration-300 ease-in-out transform;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            font-family: 'Mali', cursive;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        .sub-nested-tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        .sub-nested-tab-btn:hover::before {
+            left: 100%;
+        }
+        .sub-nested-tab-btn:hover {
+            @apply shadow-xl transform -translate-y-0.5;
+        }
+        .sub-nested-tab-btn.active {
+            @apply font-bold shadow-xl scale-105;
+        }
+
+        /* Colors for Sub-Nested Tabs */
+        .tab-ep {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            color: #9f1239;
+            border: 2px solid #fbcfe8;
+        }
+        .tab-ep.active {
+            background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+            color: #ffffff;
+            border-color: #ec4899;
+        }
+        .tab-smte {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            color: #7c3aed;
+            border: 2px solid #e9d5ff;
+        }
+        .tab-smte.active {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            color: #ffffff;
+            border-color: #a78bfa;
+        }
+        .tab-gifted {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            color: #15803d;
+            border: 2px solid #bbf7d0;
+        }
+        .tab-gifted.active {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: #ffffff;
+            border-color: #4ade80;
+        }
+
+        /* Content Containers */
+        .main-content-container {
+            @apply bg-white rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 text-base z-10 relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.07);
+        }
+        .nested-content-container {
+            @apply pt-4; 
+        }
+        
+        /* Tab Content Transitions */
+        .tab-content { @apply transition-opacity duration-500 ease-in-out; }
+        .hidden-content { display: none; opacity: 0; }
+        .content-enter { display: block; opacity: 1; }
+        
+        /* --- [NEW] Redesigned Info Cards --- */
+        .list-item { @apply flex items-start space-x-3; }
+        .list-icon { @apply text-pink-500 mt-1.5 flex-shrink-0 w-5 h-5; }
+        
+        .info-card { 
+            @apply p-4 sm:p-6 rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 ease-in-out;
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #ec4899, #8b5cf6, #10b981);
+        }
+        .card-header-icon { @apply text-3xl mb-3 text-center; }
+
+        /* --- [NEW] Redesigned Header --- */
+        .header-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #a01a1a 0%, #b91c1c 100%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            padding: 0.75rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .logo-icon {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .logo-text {
+            color: white;
+            font-family: 'Mali', cursive;
             font-weight: 700;
+            font-size: 1.2rem;
         }
-        .tab-content, .sub-tab-content {
-            display: none;
+        
+        .dropdown-wrapper {
+            position: relative;
+            display: inline-block;
         }
-        .tab-content.active, .sub-tab-content.active {
+
+        .dropdown-btn {
+            background: #ffffff;
+            color: #b91c1c;
+            font-family: 'Mali', cursive;
+            font-weight: 700;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.25s ease;
+        }
+        .dropdown-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            margin-top: 0.75rem;
+            width: 280px;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-15px);
+            pointer-events: none;
+            transition: all 0.35s ease;
+            border-top: 5px solid #b91c1c; 
+        }
+        .dropdown-menu.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .dropdown-menu a {
             display: block;
+            padding: 12px 20px;
+            color: #b91c1c;
+            font-family: 'Mali', cursive;
+            font-weight: 600;
+            text-decoration: none;
+            background: white;
+            transition: all 0.25s ease;
+        }
+        .dropdown-menu a:hover {
+            background: #fee2e2;
+            color: #7f1d1d;
+            padding-left: 24px;
+        }
+
+        /* --- [NEW] Redesigned Footer --- */
+        .footer-container {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            padding: 3rem 1rem;
+            margin-top: 3rem;
+            border-top: 5px solid #ec4899;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-family: 'Mali', cursive;
+            font-weight: 700;
+            color: #9f1239;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .footer-section p, .footer-section a {
+            font-family: 'Mali', cursive;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #9f1239;
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #fbcfe8;
+            font-family: 'Mali', cursive;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #ec4899;
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: #be185d;
+            transform: translateY(-3px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .dropdown-menu {
+                position: fixed;
+                top: 120px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-10px);
+                width: 90%;
+            }
+            .dropdown-menu.show {
+                transform: translateX(-50%) translateY(0);
+            }
+            .dropdown-btn {
+                font-size: 1.1rem;
+                padding: 0.7rem 1.4rem;
+            }
+            body::before {
+                font-size: 2.5rem;
+                width: 90%;
+                white-space: normal;
+                text-align: center;
+            }
+            .main-tab-btn {
+                 @apply px-5 py-3 text-base;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
         }
     </style>
 </head>
-<body class="text-[#073B4C]">
-    <div class="text-center my-4">
-        <a href="page2.html" class="text-blue-600 hover:underline mx-2">ไปหน้า 2</a>
-        <a href="page3.html" class="text-blue-600 hover:underline mx-2">ไปหน้า 3</a>
+<body class="font-sans text-gray-700 pt-[120px]">
+<!-- ✅ [NEW] Redesigned Header -->
+<div class="header-container">
+    <div class="logo-container">
+        <i class="fas fa-school logo-icon"></i>
+        <span class="logo-text">ครอบครัวยอดนารี❤️สตรีวิทยา</span>
     </div>
     
-    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
-        <header class="text-center my-8 md:my-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-[#118AB2]">ข้อมูลการรับนักเรียนชั้น ม.1</h1>
-            <p class="text-lg md:text-xl text-slate-600 mt-2">ภาพรวมจำนวนและสัดส่วนนักเรียนในแต่ละแผนการเรียน</p>
-        </header>
-
-        <!-- Main Tab Navigation -->
-        <div class="flex justify-center mb-8 bg-gray-100 rounded-xl p-1">
-            <button class="tab-button active py-3 px-4 text-center text-lg md:text-xl font-semibold text-gray-600 hover:text-[#118AB2] transition-all duration-300 rounded-lg focus:outline-none w-1/2" data-tab="overview">
-                ภาพรวมหลักสูตร
-            </button>
-            <button class="tab-button py-3 px-4 text-center text-lg md:text-xl font-semibold text-gray-600 hover:text-[#118AB2] transition-all duration-300 rounded-lg focus:outline-none w-1/2" data-tab="details">
-                รายละเอียดหลักสูตร
-            </button>
-        </div>
-
-        <!-- Main Tab Content - ภาพรวมหลักสูตร -->
-        <div id="overview" class="tab-content active">
-            <section class="card text-center mb-8">
-                <h2 class="text-2xl font-bold text-[#FF6B6B] mb-2">จำนวนนักเรียนที่รับทั้งหมด</h2>
-                <p class="text-7xl md:text-8xl font-extrabold text-[#073B4C]">522</p>
-                <p class="text-2xl font-bold text-[#FF6B6B]">คน</p>
-            </section>
-
-            <main class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <article class="card">
-                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-[#118AB2]">สัดส่วนนักเรียนแต่ละหลักสูตร</h2>
-                    <p class="text-center text-slate-600 mb-6">แสดงสัดส่วนโดยรวมของนักเรียนในแต่ละหลักสูตรที่เปิดรับ</p>
-                    <div class="chart-container">
-                        <canvas id="programDistributionChart"></canvas>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-[#118AB2]">เปรียบเทียบจำนวนนักเรียน</h2>
-                    <p class="text-center text-slate-600 mb-6">กราฟนี้เปรียบเทียบจำนวนนักเรียนที่รับในแต่ละหลักสูตรอย่างชัดเจน</p>
-                    <div class="chart-container">
-                        <canvas id="programComparisonChart"></canvas>
-                    </div>
-                </article>
-
-                <article class="lg:col-span-2 card">
-                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-[#118AB2]">สัดส่วนการรับนักเรียนหลักสูตรปกติ</h2>
-                    <p class="text-center text-slate-600 mb-6">ข้อมูลเชิงลึกของนักเรียนในหลักสูตรปกติ (ทั่วไป) แยกตามประเภทโควตา</p>
-                    <div class="chart-container">
-                        <canvas id="normalProgramBreakdownChart"></canvas>
-                    </div>
-                </article>
-
-                <article class="lg:col-span-2 card">
-                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 text-[#118AB2]">สรุปจำนวนรับนักเรียนแต่ละหลักสูตร</h2>
-                    <div class="overflow-x-auto">
-                        <table class="w-full min-w-max text-left border-collapse">
-                            <thead>
-                                <tr class="bg-[#073B4C] text-white">
-                                    <th class="p-4 font-bold rounded-tl-lg">หลักสูตร</th>
-                                    <th class="p-4 font-bold text-center">ห้องเรียน</th>
-                                    <th class="p-4 font-bold text-center">จำนวน (คน/ห้อง)</th>
-                                    <th class="p-4 font-bold text-center rounded-tr-lg">ยอดรวม (คน)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b border-slate-200">
-                                    <td class="p-4 font-bold text-[#073B4C]">EP (English Program)</td>
-                                    <td class="p-4 text-center">2</td>
-                                    <td class="p-4 text-center">30</td>
-                                    <td class="p-4 text-center font-bold">60</td>
-                                </tr>
-                                <tr class="border-b border-slate-200 bg-[#F8F8FF]">
-                                    <td class="p-4 font-bold text-[#073B4C]">SMTE</td>
-                                    <td class="p-4 text-center">1</td>
-                                    <td class="p-4 text-center">30</td>
-                                    <td class="p-4 text-center font-bold">30</td>
-                                </tr>
-                                <tr class="border-b border-slate-200">
-                                    <td class="p-4 font-bold text-[#073B4C]">Gifted Math</td>
-                                    <td class="p-4 text-center">2</td>
-                                    <td class="p-4 text-center">36</td>
-                                    <td class="p-4 text-center font-bold">72</td>
-                                </tr>
-                                <tr class="bg-[#F8F8FF]">
-                                    <td class="p-4 font-bold text-[#073B4C]">ปกติ (ทั่วไป)</td>
-                                    <td class="p-4 text-center">9</td>
-                                    <td class="p-4 text-center">40</td>
-                                    <td class="p-4 text-center font-bold">360</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                 <tr class="bg-[#073B4C] text-white font-bold">
-                                    <td class="p-4 rounded-bl-lg" colspan="3">รวมทั้งสิ้น</td>
-                                    <td class="p-4 text-center rounded-br-lg">522</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </article>
-            </main>
-            
-            <footer class="mt-12 text-center text-gray-500 text-sm">
-                <p><b>จัดทำโดย:</b> ลุ้นสอวอไปด้วยกันนะ</p>
-                <p><b>ติดต่อ:</b> 💖 Line OPC : ครอบครัวยอดนารี💖สตรีวิทยา</p>
-                <a href="https://shorturl.asia/BlJVn" target="_blank" class="text-blue-500 underline hover:text-blue-700 transition-all duration-300">https://shorturl.asia/BlJVn</a>
-            </footer>
-        </div>
-
-        <!-- Main Tab Content - รายละเอียดหลักสูตร -->
-        <div id="details" class="tab-content card">
-            <header class="text-center mb-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-[#118AB2] mb-2">รายละเอียดหลักสูตร</h2>
-                <p class="text-center text-slate-600">จุดเด่นและข้อควรพิจารณาในแต่ละหลักสูตร</p>
-            </header>
-
-            <!-- Sub-Tab Navigation -->
-            <div class="flex flex-wrap justify-center bg-gray-100 rounded-lg p-1 mb-8">
-                <button class="sub-tab-button active flex-1 py-2 px-4 text-center text-base md:text-lg font-semibold text-gray-600 hover:bg-white transition-all duration-300 rounded-md focus:outline-none" data-sub-tab="ep">EP</button>
-                <button class="sub-tab-button flex-1 py-2 px-4 text-center text-base md:text-lg font-semibold text-gray-600 hover:bg-white transition-all duration-300 rounded-md focus:outline-none" data-sub-tab="gifted-math">Gifted Math</button>
-                <button class="sub-tab-button flex-1 py-2 px-4 text-center text-base md:text-lg font-semibold text-gray-600 hover:bg-white transition-all duration-300 rounded-md focus:outline-none" data-sub-tab="smte">SMTE</button>
-                <button class="sub-tab-button flex-1 py-2 px-4 text-center text-base md:text-lg font-semibold text-gray-600 hover:bg-white transition-all duration-300 rounded-md focus:outline-none" data-sub-tab="regular">ห้องปกติ</button>
-            </div>
-
-            <!-- Sub-Tab Content Containers -->
-            <div id="ep" class="sub-tab-content active">
-                <h2 class="text-3xl font-bold text-purple-700 text-center mb-6">จุดเด่นของหลักสูตร EP ✨</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">📚</span><h3 class="text-lg font-semibold text-purple-800 mb-2">เรียนวิชาหลักเป็นภาษาอังกฤษ</h3><p class="text-base text-gray-700">วิชาคณิตศาสตร์ วิทยาศาสตร์ และวิชาหลักๆ จะสอนเป็นภาษาอังกฤษ ทำให้นักเรียนคุ้นเคยกับศัพท์วิชาการ</p></div>
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🗣️</span><h3 class="text-lg font-semibold text-purple-800 mb-2">ครูต่างชาติ (Native Speaker)</h3><p class="text-base text-gray-700">ได้เรียนกับครูเจ้าของภาษาที่มาช่วยสอน ทำให้พัฒนาการฟัง-พูดภาษาอังกฤษเป็นธรรมชาติและมั่นใจ</p></div>
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🌐</span><h3 class="text-lg font-semibold text-purple-800 mb-2">สิ่งแวดล้อมการเรียนรู้แบบสองภาษา</h3><p class="text-base text-gray-700">นักเรียนจะได้ฝึกใช้ภาษาอังกฤษทั้งในและนอกห้องเรียน มีเพื่อนที่สนใจและพร้อมพัฒนาภาษาไปด้วยกัน</p></div>
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🏅</span><h3 class="text-lg font-semibold text-purple-800 mb-2">โอกาสแข่งขัน/แลกเปลี่ยน</h3><p class="text-base text-gray-700">มีโอกาสเข้าร่วมแข่งขันทักษะภาษาอังกฤษระดับประเทศและนานาชาติ รวมถึงโครงการแลกเปลี่ยนนักเรียน</p></div>
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🎓</span><h3 class="text-lg font-semibold text-purple-800 mb-2">ต่อยอดการเรียนต่อ</h3><p class="text-base text-gray-700">ปูพื้นฐานภาษาอังกฤษที่แข็งแรงสำหรับการสอบเข้า ม.ปลาย, หรือการเรียนต่อในหลักสูตรนานาชาติในมหาวิทยาลัย</p></div>
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🗺️</span><h3 class="text-lg font-semibold text-purple-800 mb-2">กิจกรรมและโครงการเสริม</h3><p class="text-base text-gray-700">มีค่ายวิชาการ, Summer Abroad, โครงการ Junior Researcher และคอร์สเตรียมสอบ IELTS/SAT</p></div>
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🏫</span><h3 class="text-lg font-semibold text-purple-800 mb-2">อาคารเรียน</h3><p class="text-base text-gray-700">มีอาคารเรียนสำหรับหลักสูตร EP โดยเฉพาะ</p></div>
-                </div>
-                <h2 class="text-3xl font-bold text-red-700 text-center mb-6 mt-8">ข้อควรพิจารณา ⚠️</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">💬</span><h3 class="text-lg font-semibold text-red-800 mb-2">ความพร้อมด้านภาษา</h3><p class="text-base text-gray-700">หากนักเรียนยังไม่มีพื้นฐานที่ดีพอ อาจต้องใช้เวลาปรับตัวมากขึ้น</p></div>
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">💰</span><h3 class="text-lg font-semibold text-red-800 mb-2">ค่าใช้จ่าย</h3><p class="text-base text-gray-700">หลักสูตร EP มีค่าใช้จ่ายสูงกว่าหลักสูตรปกติ รวมถึงค่าใช้จ่ายแรกเข้า 50,000 บาท</p></div>
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">📝</span><h3 class="text-lg font-semibold text-red-800 mb-2">การสอบเข้า</h3><p class="text-base text-gray-700">มีการสอบสัมภาษณ์เป็นภาษาอังกฤษ ซึ่งต้องมีการเตรียมตัวเป็นพิเศษ</p></div>
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🇹🇭</span><h3 class="text-lg font-semibold text-red-800 mb-2">การเรียนภาษาไทย</h3><p class="text-base text-gray-700">บางวิชาจะยังคงเรียนเป็นภาษาไทยตามหลักสูตรแกนกลาง</p></div>
-                </div>
-            </div>
-
-            <div id="gifted-math" class="sub-tab-content">
-                <h2 class="text-3xl font-bold text-green-600 text-center mb-6">ข้อดีของหลักสูตร Gifted Math ✅</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-green-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🧠</span><h3 class="text-lg font-semibold text-green-800 mb-2">เนื้อหาที่เข้มข้นและล้ำหน้า</h3><p class="text-base text-gray-700">มุ่งเน้นการสอนคณิตศาสตร์เชิงลึกและครอบคลุมเนื้อหาที่ยากกว่า เพื่อเตรียมความพร้อมให้นักเรียนสำหรับการแข่งขันทางวิชาการและสนามสอบสำคัญต่างๆ</p></div>
-                    <div class="bg-green-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🏆</span><h3 class="text-lg font-semibold text-green-800 mb-2">โอกาสในการแข่งขันทางวิชาการ</h3><p class="text-base text-gray-700">นักเรียนจะได้รับการสนับสนุนและฝึกฝนเป็นพิเศษเพื่อเข้าร่วมการแข่งขันระดับต่างๆ เช่น โอลิมปิกวิชาการ</p></div>
-                    <div class="bg-green-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">📚</span><h3 class="text-lg font-semibold text-green-800 mb-2">โอกาสในการเข้าร่วมค่ายวิชาการ</h3><p class="text-base text-gray-700">นักเรียนจะได้รับโอกาสเข้าร่วมค่ายต่างๆ เช่น เข้าค่ายดาวรุ่งมุ่งสู่ฝัน และค่ายวิทย์ เพื่อเสริมทักษะและความรู้เพิ่มเติม</p></div>
-                    <div class="bg-green-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🤝</span><h3 class="text-lg font-semibold text-green-800 mb-2">สภาพแวดล้อมที่เอื้อต่อการเรียนรู้</h3><p class="text-base text-gray-700">การเรียนกับเพื่อนร่วมชั้นที่มีความสนใจและทักษะใกล้เคียงกัน ช่วยสร้างบรรยากาศที่ส่งเสริมการเรียนรู้</p></div>
-                    <div class="bg-green-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🛣️</span><h3 class="text-lg font-semibold text-green-800 mb-2">การปูทางสู่การศึกษาต่อ</h3><p class="text-base text-gray-700">ช่วยให้นักเรียนมีพื้นฐานที่แข็งแกร่งสำหรับการศึกษาต่อในระดับชั้นที่สูงขึ้น ทั้งในหลักสูตร Gifted Math ม.ปลาย</p></div>
-                </div>
-                <h2 class="text-3xl font-bold text-red-600 text-center mb-6 mt-8">ข้อควรพิจารณา ⚠️</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🤯</span><h3 class="text-lg font-bold text-red-800 mb-2">ความกดดันและความเครียด</h3><p class="text-base text-gray-700">การแข่งขันที่สูงและปริมาณการบ้านที่เพิ่มขึ้นอาจทำให้นักเรียนรู้สึกกดดัน ซึ่งอาจส่งผลกระทบต่อสุขภาพจิต</p></div>
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">⚡</span><h3 class="text-lg font-bold text-red-800 mb-2">ความรวดเร็วในการเรียน</h3><p class="text-base text-gray-700">การเรียนรู้ที่รวดเร็วและเนื้อหาที่ซับซ้อน อาจทำให้นักเรียนบางคนตามไม่ทัน หากไม่มีการทบทวนอย่างสม่ำเสมอ</p></div>
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">⚖️</span><h3 class="text-lg font-bold text-red-800 mb-2">การเสียสมดุลด้านอื่นๆ</h3><p class="text-base text-gray-700">การทุ่มเทเวลาให้กับการเรียนคณิตศาสตร์อย่างมากอาจทำให้มีเวลาสำหรับกิจกรรมนอกหลักสูตรน้อยลง</p></div>
-                </div>
-            </div>
-
-            <div id="smte" class="sub-tab-content">
-                <h2 class="text-3xl font-bold text-purple-700 text-center mb-6">จุดเด่นของหลักสูตร SMTE ✨</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🔬</span><h3 class="text-lg font-semibold text-purple-800 mb-2">เน้นการเรียนรู้เชิงลึก</h3><p class="text-base text-gray-700">ด้านวิทยาศาสตร์ คณิตศาสตร์ เทคโนโลยี และสิ่งแวดล้อม ภายใต้การดูแลของ สสวท.</p></div>
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🧪</span><h3 class="text-lg font-semibold text-purple-800 mb-2">การเรียนรู้เชิงปฏิบัติ</h3><p class="text-base text-gray-700">ส่งเสริมการเรียนรู้ผ่านการทดลองในห้องปฏิบัติการและโครงงาน STEM</p></div>
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">💡</span><h3 class="text-lg font-semibold text-purple-800 mb-2">พัฒนาทักษะการคิด</h3><p class="text-base text-gray-700">พัฒนาทักษะการคิดวิเคราะห์ การแก้ปัญหา และการทำงานเป็นทีม</p></div>
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🗺️</span><h3 class="text-lg font-semibold text-purple-800 mb-2">กิจกรรมพิเศษ</h3><p class="text-base text-gray-700">มีโอกาสเข้าร่วมค่าย SMTE, ค่ายวิทย์ หรือทัศนศึกษาในสถาบันวิจัยต่างๆ</p></div>
-                    <div class="bg-purple-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🗣️</span><h3 class="text-lg font-semibold text-purple-800 mb-2">วิชาภาษาอังกฤษ</h3><p class="text-base text-gray-700">เรียนหลักสูตรภาษาอังกฤษ (Gifted) และสอนโดยครูเจ้าของภาษาเพื่อพัฒนาทักษะภาษาอังกฤษ</p></div>
-                </div>
-                <h2 class="text-3xl font-bold text-red-700 text-center mb-6 mt-8">ข้อควรพิจารณา ⚠️</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">💪</span><h3 class="text-lg font-semibold text-red-800 mb-2">ภาระงานหนัก</h3><p class="text-base text-gray-700">เนื้อหายากและมีการบ้าน/โครงงานจำนวนมาก ต้องใช้เวลาเรียนรู้และชอบการทำโครงงาน</p></div>
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🏆</span><h3 class="text-lg font-semibold text-red-800 mb-2">การแข่งขันสูง</h3><p class="text-base text-gray-700">การเรียนและกิจกรรมมีการแข่งขันสูง ซึ่งอาจสร้างความเครียดได้</p></div>
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">⏳</span><h3 class="text-lg font-semibold text-red-800 mb-2">เวลาส่วนตัวน้อยลง</h3><p class="text-base text-gray-700">เพราะต้องทุ่มเทเวลาให้กับการเรียนและโครงงานจำนวนมาก</p></div>
-                </div>
-            </div>
-
-            <div id="regular" class="sub-tab-content">
-                <h2 class="text-3xl font-bold text-teal-700 text-center mb-6">ข้อดีของหลักสูตรห้องปกติ ✅</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-teal-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">📚</span><h3 class="text-xl font-semibold text-teal-800 mb-2">การเรียนการสอนคุณภาพสูง</h3><p class="text-base text-gray-700">มีชื่อเสียงด้านการศึกษา โดยเฉพาะวิชาหลักอย่างวิทยาศาสตร์ คณิตศาสตร์ และภาษาอังกฤษ</p></div>
-                    <div class="bg-teal-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🤸</span><h3 class="text-xl font-semibold text-teal-800 mb-2">กิจกรรมเสริมทักษะ</h3><p class="text-base text-gray-700">มีกิจกรรมหลากหลาย เช่น กิจกรรมสัปดาห์วิทยาศาสตร์ กิจกรรมตอบปัญหาสังคม และกิจกรรมเพื่อสังคมอื่น ๆ</p></div>
-                    <div class="bg-teal-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🤝</span><h3 class="text-xl font-semibold text-teal-800 mb-2">สังคมการเรียนรู้ที่ดี</h3><p class="text-base text-gray-700">นักเรียนมีสังคมที่เป็นมิตรและสนับสนุนกัน ไม่เน้นการแข่งขันสูงเกินไป</p></div>
-                    <div class="bg-teal-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">💰</span><h3 class="text-xl font-semibold text-teal-800 mb-2">ค่าใช้จ่ายที่เหมาะสม</h3><p class="text-base text-gray-700">ค่าเทอมอยู่ในระดับที่เหมาะสมเมื่อเทียบกับคุณภาพการศึกษาที่ได้รับ</p></div>
-                </div>
-                <h2 class="text-3xl font-bold text-red-700 text-center mb-6 mt-8">ข้อควรระวัง ⚠️</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">📉</span><h3 class="text-xl font-semibold text-red-800 mb-2">ความเข้มข้นน้อยกว่า</h3><p class="text-base text-gray-700">เนื้อหาการเรียนอาจไม่เข้มข้นเท่าห้องพิเศษ ซึ่งอาจส่งผลต่อการเตรียมตัวสำหรับการศึกษาต่อในระดับที่สูงขึ้น</p></div>
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">🏆</span><h3 class="text-xl font-semibold text-red-800 mb-2">การแข่งขันวิชาการน้อยกว่า</h3><p class="text-base text-gray-700">หากต้องการเตรียมตัวสำหรับการแข่งขันทางวิชาการระดับสูง ห้องพิเศษอาจเป็นตัวเลือกที่เหมาะสมกว่า</p></div>
-                    <div class="bg-red-100 rounded-2xl p-6 shadow-md flex flex-col items-center text-center"><span class="text-4xl mb-4">📝</span><h3 class="text-xl font-semibold text-red-800 mb-2">เกณฑ์การคัดเลือก</h3><p class="text-base text-gray-700">การเข้าศึกษาต่อในชั้น ม.4 มีเกณฑ์คัดเลือกที่เข้มงวดจากผลการเรียน</p></div>
-                </div>
-            </div>
-
-            <!-- Shared Footer for Details Tab -->
-            <footer class="mt-12 text-center text-gray-500 text-sm">
-                <p><b>จัดทำโดย:</b> ลุ้นสอวอไปด้วยกันนะ</p>
-                <p><b>ติดต่อ:</b> 💖 Line OPC : ครอบครัวยอดนารี💖สตรีวิทยา</p>
-                <a href="https://shorturl.asia/BlJVn" target="_blank" class="text-blue-500 underline hover:text-blue-700 transition-all duration-300">https://shorturl.asia/BlJVn</a>
-            </footer>
+    <div class="dropdown-wrapper relative inline-block">
+        <button id="dropdownButton" class="dropdown-btn">
+            ☰ เมนูหลัก
+        </button>
+        <div id="dropdownMenu" class="dropdown-menu hidden">
+            <a href="index.html">🏠 หน้าหลักครอบครัวยอดนารี</a>
+            <a href="Page5.html">📘 ข้อมูลการรับนักเรียน</a>
+            <a href="Page2.html">📖 การเตรียมตัวการสอบเข้า</a>
+            <a href="Page3.html">📊 วิเคราะห์คะแนนสอบเข้า</a>
+            <a href="Page4.html">📈 สถิติอัตราการแข่งขัน</a>
+            <a href="Page6.html">🧭 แผนลับหลักสูตรม.1</a>
+            <a href="โปรแกรมคำนวณเกรดเฉลี่ย.html">🧮 โปรแกรมคำนวณเกรดเฉลี่ย</a>
+            <a href="Page7.html">🗓️ ตัวอย่างตารางเรียน ม.1</a>
+            <a href="ระบบสถิติคะแนนสอบเข้าม.1.html">📚 ระบบสถิติคะแนนสอบเข้า</a>
+            <a href="โครงสร้างข้อสอบห้องเรียนปกติ.html">📑 โครงสร้างข้อสอบห้องเรียนปกติ</a>
         </div>
     </div>
+</div>
+    
+    <div class="container mx-auto max-w-5xl px-4">
+        <header class="text-center mb-8">
+             <div class="inline-block bg-white p-4 rounded-full shadow-lg mb-4">
+                 <i class="fas fa-school text-4xl text-pink-600"></i>
+             </div>
+            <h1 class="text-4xl font-extrabold text-pink-600">ครอบครัวยอดนารี❤️สตรีวิทยา</h1>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-700 to-purple-600">การเตรียมตัวสอบเข้าม.1 โรงเรียนสตรีวิทยา</h2>
+            <p class="text-gray-600 mt-3 text-lg">ปีการศึกษา 2569</p>
+            <div class="mt-4 inline-block bg-rose-100 text-rose-800 rounded-full px-4 py-2 text-sm shadow-inner">
+                จัดทำโดย.. ลุ้นสอวอไปด้วยกันนะ ❤️
+                <a href="https://shorturl.asia/BlJVn" target="_blank" class="ml-2 font-semibold text-blue-600 hover:underline"><i class="fab fa-line"></i> Line OPC</a>
+            </div>
+        </header>
 
-    <script>
-        const chartData = {
-            labels: ['EP (English Program)', 'SMTE', 'Gifted Math', 'ปกติ (ทั่วไป)'],
-            values: [60, 30, 72, 360]
-        };
+        <!-- [NEW] Redesigned Main Tabs -->
+        <nav class="flex flex-wrap justify-center gap-3 sm:gap-5 my-10" id="main-tabs"> 
+            <button class="main-tab-btn tab-special active" data-tab="special-programs-main">
+                <i class="fas fa-star mr-2"></i>ห้องเรียนพิเศษ
+            </button>
+            <button class="main-tab-btn tab-normal" data-tab="normal-program-main">
+                <i class="fas fa-users mr-2"></i>ห้องเรียนปกติ
+            </button>
+            <button class="main-tab-btn tab-prep" data-tab="preparation-main">
+                <i class="fas fa-lightbulb mr-2"></i>การเตรียมตัว
+            </button>
+        </nav>
 
-        const normalProgramData = {
-            labels: ['นอกเขต', 'ในเขต', 'ความสามารถพิเศษ', 'เงื่อนไขพิเศษ'],
-            values: [265, 30, 20, 45]
-        };
+        <!-- [NEW] Main Content Container -->
+        <main class="main-content-container">
+            <div id="main-content">
+                <!-- === ห้องเรียนพิเศษ === -->
+                <div id="special-programs-main" class="main-tab-content content-enter">
+                    <!-- [NEW] Redesigned Nested Tabs -->
+                    <div class="nested-tabs-container" id="special-nested-tabs">
+                        <button class="nested-tab-btn tab-sp-exam active" data-tab="special-exam">
+                            <i class="fas fa-file-alt mr-2"></i>ข้อมูลการสอบ
+                        </button>
+                        <button class="nested-tab-btn tab-sp-quals" data-tab="special-quals">
+                            <i class="fas fa-check-circle mr-2"></i>คุณสมบัติเฉพาะ
+                        </button>
+                        <button class="nested-tab-btn tab-sp-docs" data-tab="special-docs">
+                            <i class="fas fa-folder-open mr-2"></i>เอกสารสมัคร
+                        </button>
+                    </div>
+                    <div id="special-nested-content" class="nested-content-container">
+                        <!-- เนื้อหา ข้อมูลการสอบ (พิเศษ) -->
+                        <div id="special-exam" class="nested-tab-content content-enter">
+                            <h2 class="text-2xl font-semibold mb-6 text-pink-700 text-center">ข้อมูลการสอบ (ห้องเรียนพิเศษ)</h2>
+                            <!-- [NEW] Redesigned Sub-Nested Tabs -->
+                            <div class="sub-nested-tabs-container" id="exam-sub-nested-tabs">
+                                <button class="sub-nested-tab-btn tab-ep active" data-tab="exam-ep">
+                                    <i class="fas fa-globe mr-1"></i>EP
+                                </button>
+                                <button class="sub-nested-tab-btn tab-smte" data-tab="exam-smte">
+                                    <i class="fas fa-atom mr-1"></i>SMTE
+                                </button>
+                                <button class="sub-nested-tab-btn tab-gifted" data-tab="exam-gifted">
+                                    <i class="fas fa-brain mr-1"></i>Gifted Math
+                                </button>
+                            </div>
+                            <div id="exam-sub-nested-content">
+                                <div id="exam-ep" class="sub-nested-tab-content content-enter">
+                                    <!-- [NEW] Redesigned Info Card -->
+                                    <div class="info-card max-w-md mx-auto bg-pink-50">
+                                        <h3 class="font-bold text-pink-800 text-xl mb-4 text-center">English Program (EP)</h3>
+                                        <h3 class="font-normal text-blue-600 text-lg mb-3">📝แจกข้อสอบตามรายวิชา เก็บข้อสอบเมื่อหมดเวลา</h3>
+                                        <div class="space-y-3">
+                                            <div class="text-center mb-4"><span class="font-bold text-3xl text-pink-600">200</span> <span class="text-gray-600">คะแนน</span></div>
+                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-language text-pink-500 mr-2"></i>ภาษาอังกฤษ (90 นาที)</span> <span class="font-semibold">80 คะแนน</span></div>
+                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-calculator text-pink-500 mr-2"></i>คณิตศาสตร์ (60 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
+                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-flask text-pink-500 mr-2"></i>วิทยาศาสตร์ (60 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
+                                            <div class="mt-4 p-3 bg-yellow-100 text-yellow-800 rounded-xl text-center font-bold shadow-inner border border-yellow-200"><i class="fas fa-star mr-2"></i>สอบสัมภาษณ์ 20 คะแนน</div>
+                                            <p class="text-lg font-semibold text-blue-800 pt-4 text-center">ข้อสอบปรนัยและอัตนัย (โจทย์ภาษาไทย และภาษาอังกฤษ)</p>
+                                            <p class="text-sm text-center text-red-500 -mt-2">(ออกข้อสอบโดยโรงเรียนสตรีวิทยา)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="exam-smte" class="sub-nested-tab-content hidden-content">
+                                    <!-- [NEW] Redesigned Info Card -->
+                                    <div class="info-card max-w-md mx-auto bg-purple-50">
+                                        <h3 class="font-bold text-purple-800 text-xl mb-4 text-center">SMTE</h3>
+                                        <h3 class="font-normal text-blue-600 text-lg mb-3">📝แจกข้อสอบตามรายวิชา เก็บข้อสอบเมื่อหมดเวลา</h3>
+                                        <div class="space-y-3">
+                                            <div class="text-center mb-4"><span class="font-bold text-3xl text-purple-600">100</span> <span class="text-gray-600">คะแนน</span></div>
+                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-calculator text-purple-500 mr-2"></i>คณิตศาสตร์ (120 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
+                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-vial text-purple-500 mr-2"></i>วิทยาศาสตร์ (120 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
+                                            <p class="text-lg font-semibold text-blue-800 pt-4 text-center">ข้อสอบปรนัยและอัตนัย</p>
+                                            <p class="text-sm text-center text-red-500 -mt-2">(ข้อสอบกลาง สพฐ.)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="exam-gifted" class="sub-nested-tab-content hidden-content">
+                                    <!-- [NEW] Redesigned Info Card -->
+                                    <div class="info-card max-w-md mx-auto bg-green-50">
+                                        <h3 class="font-bold text-green-800 text-xl mb-4 text-center">Gifted Math</h3>
+                                        <h3 class="font-normal text-blue-600 text-lg mb-3">📝แจกข้อสอบตามรายวิชา เก็บข้อสอบเมื่อหมดเวลา</h3>
+                                        <div class="space-y-3">
+                                            <div class="text-center mb-4"><span class="font-bold text-3xl text-green-600">110</span> <span class="text-gray-600">คะแนน</span></div>
+                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-calculator text-green-500 mr-2"></i>คณิตศาสตร์ (90 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
+                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-flask text-green-500 mr-2"></i>วิทยาศาสตร์ (90 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
+                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-language text-green-500 mr-2"></i>ภาษาอังกฤษ (30 นาที)</span> <span class="font-semibold">10 คะแนน</span></div>
+                                            <p class="text-lg font-semibold text-blue-800 pt-4 text-center">ข้อสอบปรนัยและอัตนัย</p>
+                                            <p class="text-sm text-center text-red-500 -mt-2">(ออกข้อสอบโดยโรงเรียนสตรีวิทยา)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- เนื้อหา คุณสมบัติ (พิเศษ) -->
+                        <div id="special-quals" class="nested-tab-content hidden-content">
+                            <h2 class="text-2xl font-semibold mb-6 text-pink-700 text-center">✅ คุณสมบัติเฉพาะ</h2>
+                            <div class="grid lg:grid-cols-3 gap-6">
+                                <!-- [NEW] Redesigned Info Card -->
+                                <div class="info-card text-center bg-pink-50">
+                                    <p class="card-header-icon text-pink-500"><i class="fas fa-globe-americas"></i></p>
+                                    <h3 class="font-bold text-pink-800 text-lg mb-3">English Program (EP)</h3>
+                                    <ul class="space-y-3 text-gray-700 text-left"><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยรวม <strong>ไม่ต่ำกว่า 3.50</strong></span></li><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยภาษาอังกฤษ <strong>ไม่ต่ำกว่า 3.50</strong></span></li></ul>
+                                </div>
+                                <!-- [NEW] Redesigned Info Card -->
+                                <div class="info-card text-center bg-purple-50">
+                                    <p class="card-header-icon text-purple-500"><i class="fas fa-atom"></i></p>
+                                    <h3 class="font-bold text-purple-800 text-lg mb-3">SMTE</h3>
+                                    <ul class="space-y-3 text-gray-700 text-left"><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยรวม <strong>ไม่ต่ำกว่า 3.50</strong></span></li><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยคณิตศาสตร์ <strong>ไม่ต่ำกว่า 3.50</strong></span></li><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยวิทยาศาสตร์ <strong>ไม่ต่ำกว่า 3.50</strong></span></li></ul>
+                                </div>
+                                <!-- [NEW] Redesigned Info Card -->
+                                <div class="info-card text-center bg-green-50">
+                                    <p class="card-header-icon text-green-500"><i class="fas fa-brain"></i></p>
+                                    <h3 class="font-bold text-green-800 text-lg mb-3">Gifted Math</h3>
+                                    <ul class="space-y-3 text-gray-700 text-left"><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยรวม <strong>ไม่ต่ำกว่า 3.50</strong></span></li><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยคณิตศาสตร์ <strong>ไม่ต่ำกว่า 3.50</strong></span></li><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยวิทยาศาสตร์ <strong>ไม่ต่ำกว่า 3.50</strong></span></li></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- เนื้อหา เอกสาร (พิเศษ) -->
+                        <div id="special-docs" class="nested-tab-content hidden-content">
+                            <h2 class="text-2xl font-semibold mb-6 text-pink-700 text-center">🍀 เอกสารสมัคร (ห้องเรียนพิเศษ)</h2>
+                            <!-- [NEW] Redesigned Info Card -->
+                            <div class="info-card max-w-2xl mx-auto bg-gray-50">
+                                <ol class="space-y-4 text-gray-700 divide-y divide-pink-100">
+                                    <li class="list-item pt-3 first:pt-0"><i class="fas fa-camera list-icon"></i><span> รูปถ่าย 1.5 นิ้ว (ไม่เกิน 6 เดือน) <span class="font-bold text-pink-600 ml-2">จำนวน 4 รูป</span></span></li>
+                                    <li class="list-item pt-3"><i class="fas fa-id-card list-icon"></i><span> สำเนาทะเบียนบ้าน (นักเรียน)</span></li>
+                                    <li class="list-item pt-3"><i class="fas fa-users list-icon"></i><span> สำเนาทะเบียนบ้าน (ผู้ปกครอง)</span></li>
+                                    <li class="list-item pt-3"><i class="fas fa-graduation-cap list-icon"></i><span> สำเนารับรองกำลังศึกษาชั้น ป.6 (ปพ.7)</span></li>
+                                    <li class="list-item pt-3"><i class="fas fa-file-invoice list-icon"></i><span> สำเนาระเบียนแสดงผลการเรียน ปพ.1 หรือ ปพ.6 (ป.4 และ ป.5)</span></li>
+                                    <li class="list-item pt-3"><i class="fas fa-file-alt list-icon"></i><span> เอกสารอื่นๆ (ถ้ามี) เช่น ใบเปลี่ยนชื่อ-สกุล</span></li>
+                                </ol>
+                                <p class="text-sm text-red-600 pl-8 pt-4 border-t border-pink-100 mt-4">*นำฉบับจริงมาแสดง และนักเรียนลงนามรับรองสำเนาทุกฉบับ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- === ห้องเรียนปกติ === -->
+                <div id="normal-program-main" class="main-tab-content hidden-content">
+                    <!-- [NEW] Redesigned Nested Tabs -->
+                    <div class="nested-tabs-container" id="normal-nested-tabs">
+                        <button class="nested-tab-btn tab-no-exam active" data-tab="normal-exam">
+                            <i class="fas fa-file-alt mr-2"></i>ข้อมูลการสอบ
+                        </button>
+                        <button class="nested-tab-btn tab-no-docs" data-tab="normal-docs">
+                            <i class="fas fa-folder-open mr-2"></i>เอกสารสมัคร
+                        </button>
+                    </div>
+                    <div id="normal-nested-content" class="nested-content-container">
+                        <!-- เนื้อหา ข้อมูลการสอบ (ปกติ) -->
+                        <div id="normal-exam" class="nested-tab-content content-enter">
+                            <h2 class="text-2xl font-semibold mb-6 text-pink-700 text-center">ข้อมูลการสอบ (ห้องเรียนปกติ)</h2>
+                            <!-- [NEW] Redesigned Info Card -->
+                            <div class="info-card bg-blue-50">
+                                <h3 class="font-bold text-gray-800 text-lg mb-3">วิชาที่สอบ (รวม 100 คะแนน วิชาละ 35 นาที)</h3>
+                                <h3 class="font-normal text-blue-600 text-lg mb-3">📝 การแจกข้อสอบ:ข้อสอบแบ่งเป็น 2 ชุด</h3>
+                                <h3 class="font-normal text-blue-600 text-lg mb-3">⏱️ การเก็บ: เมื่อหมดเวลา เก็บข้อสอบชุดนั้นทันที</h3>
+                                <!-- [NEW] Updated subject boxes -->
+                                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center my-6">
+                                    <div class="p-4 bg-rose-50 rounded-3xl border border-rose-200 shadow-md"><i class="fas fa-calculator text-rose-500 mb-1"></i><p>คณิตศาสตร์</p><p class="font-bold">20 คะแนน</p></div>
+                                    <div class="p-4 bg-blue-100 rounded-3xl border border-blue-200 shadow-md"><i class="fas fa-book text-blue-500 mb-1"></i><p>ภาษาไทย</p><p class="font-bold">20 คะแนน</p></div>
+                                    <div class="p-4 bg-green-50 rounded-3xl border border-green-200 shadow-md"><i class="fas fa-language text-green-500 mb-1"></i><p>ภาษาอังกฤษ</p><p class="font-bold">20 คะแนน</p></div>
+                                    <div class="p-4 bg-yellow-50 rounded-3xl border border-yellow-200 shadow-md"><i class="fas fa-flask text-yellow-600 mb-1"></i><p>วิทยาศาสตร์</p><p class="font-bold">20 คะแนน</p></div>
+                                    <div class="p-4 bg-purple-50 rounded-3xl border border-purple-200 shadow-md"><i class="fas fa-landmark text-purple-500 mb-1"></i><p>สังคมศึกษา</p><p class="font-bold">20 คะแนน</p></div>
+                                </div>
+                                <p class="text-lg font-semibold text-blue-800 mt-4 text-center">ข้อสอบปรนัย 4 ตัวเลือก</p>
+                                <p class="text-sm text-center text-red-500 -mt-1">(ออกข้อสอบโดยโรงเรียนสตรีวิทยา)</p>
+                            
+                                <div class="mt-6 pt-6 border-t border-gray-200">
+                                    <h3 class="font-bold text-gray-800 text-lg flex items-center gap-2 mb-2"><i class="fas fa-user-check text-green-500"></i>คุณสมบัติ</h3>
+                                    <p class="text-gray-600 mb-4">ไม่ได้ระบุเกรดเฉลี่ยขั้นต่ำ (พิจารณาคะแนนสอบเป็นหลัก)</p>
+                                    <div class="p-3 bg-yellow-100 border-l-4 border-yellow-400 text-yellow-800 rounded-r-lg text-sm">
+                                        <h4 class="font-bold">หมายเหตุ (เขตพื้นที่บริการ)</h4>
+                                        <p>ต้องมีชื่ออยู่ในทะเบียนบ้านในเขตพื้นที่บริการของโรงเรียนอย่างน้อย 2 ปี (นับถึง 16 พ.ค.)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- เนื้อหา เอกสาร (ปกติ) -->
+                        <div id="normal-docs" class="nested-tab-content hidden-content">
+                            <h2 class="text-2xl font-semibold mb-6 text-pink-700 text-center">🍀 เอกสารสมัคร (ห้องเรียนปกติ)</h2>
+                            <!-- [NEW] Redesigned Info Card -->
+                            <div class="info-card max-w-2xl mx-auto bg-gray-50">
+                                <ol class="space-y-4 text-gray-700">
+                                    <li class="list-item"><i class="fas fa-camera list-icon"></i><span> รูปถ่าย 1 นิ้ว (ไม่เกิน 6 เดือน) <span class="font-bold text-pink-600 ml-2">จำนวน 4 รูป</span></span></li>
+                                    <li class="list-item"><i class="fas fa-id-card list-icon"></i><span> สำเนาทะเบียนบ้าน (นักเรียน)</span></li>
+                                    <li class="list-item"><i class="fas fa-users list-icon"></i><span> สำเนาทะเบียนบ้าน (ผู้ปกครอง)</span></li>
+                                    <li class="list-item"><i class="fas fa-award list-icon"></i><span> สำเนารับรองการศึกษา ป.6 (ปพ.1 หรือ ปพ.7)</span></li>
+                                    <li class="list-item"><i class="fas fa-chart-bar list-icon"></i><span> สำเนาระเบียนแสดงผลการเรียน (ปพ.1 หรือ ปพ.6)</span></li>
+                                    <li class="list-item"><i class="fas fa-file-alt list-icon"></i><span> เอกสารอื่นๆ (ถ้ามี) เช่น ใบเปลี่ยนชื่อ-สกุล</span></li>
+                                </ol>
+                                <div class="mt-6 pt-4 border-t border-pink-100">
+                                    <h4 class="font-bold text-blue-700">เพิ่มเติม (นักเรียนในเขตพื้นที่บริการ)</h4>
+                                    <ul class="list-disc list-inside mt-2 text-sm text-blue-900">
+                                        <li>สำเนาทะเบียนบ้านหน้า 18</li>
+                                        <li>หนังสือรับรองการอยู่อาศัยจริง</li>
+                                        <li>สำเนาบัตรประชาชนของเจ้าบ้าน</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- === การเตรียมตัว === -->
+                <div id="preparation-main" class="main-tab-content hidden-content">
+                    <div class="nested-content-container">
+                        <h2 class="text-2xl font-semibold mb-6 text-pink-700">🚀 เทคนิคเตรียมตัวสอบเข้าสตรีวิทยา</h2>
+                        <div class="grid md:grid-cols-2 gap-6 text-gray-700">
+                            <!-- [NEW] Redesigned Info Card -->
+                            <div class="info-card flex items-start space-x-4 bg-blue-50"><div class="text-3xl text-blue-500 pt-1"><i class="fas fa-bullseye"></i></div><div><h3 class="font-bold text-blue-800">1. รู้ลึก รู้จริงเรื่องแนวข้อสอบ</h3><p>ศึกษารายละเอียดวิชาที่สอบ หาข้อสอบเก่ามาฝึกทำเพื่อจับแนวทางและสไตล์ของข้อสอบ</p></div></div>
+                            <div class="info-card flex items-start space-x-4 bg-green-50"><div class="text-3xl text-green-500 pt-1"><i class="fas fa-calendar-alt"></i></div><div><h3 class="font-bold text-green-800">2. วางแผนการอ่านหนังสือ</h3><p>จัดตารางเวลาให้ชัดเจน แบ่งเนื้อหาที่ต้องทบทวนในแต่ละวัน ไม่ควรอัดอ่านตอนใกล้สอบ</p></div></div>
+                            <div class="info-card flex items-start space-x-4 bg-yellow-50"><div class="text-3xl text-yellow-600 pt-1"><i class="fas fa-stopwatch"></i></div><div><h3 class="font-bold text-yellow-800">3. ฝึกทำโจทย์และจับเวลา</h3><p>ความเร็วเป็นสิ่งสำคัญ ฝึกทำข้อสอบโดยจับเวลาเหมือนสอบจริง จะช่วยให้บริหารเวลาในห้องสอบได้ดีขึ้น</p></div></div>
+                            <div class="info-card flex items-start space-x-4 bg-red-50"><div class="text-3xl text-red-500 pt-1"><i class="fas fa-heartbeat"></i></div><div><h3 class="font-bold text-red-800">4. ดูแลสุขภาพกายและใจ</h3><p>พักผ่อนให้เพียงพอ ทานอาหารที่มีประโยชน์ และหาเวลาผ่อนคลาย เพื่อให้สมองปลอดโปร่ง</p></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
-        const chartColors = ['#FF6B6B', '#FFD166', '#06D6A0', '#118AB2'];
-
-        function wrapLabel(label, maxWidth) {
-            if (label.length <= maxWidth) {
-                return label;
-            }
-            const words = label.split(' ');
-            let lines = [];
-            let currentLine = '';
-            words.forEach(word => {
-                if ((currentLine + ' ' + word).trim().length > maxWidth) {
-                    lines.push(currentLine.trim());
-                    currentLine = word;
-                } else {
-                    currentLine = (currentLine + ' ' + word).trim();
-                }
-            });
-            if (currentLine) {
-                lines.push(currentLine.trim());
-            }
-            return lines;
-        }
+    <!-- [NEW] Redesigned Footer -->
+    <footer class="footer-container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>เกี่ยวกับเรา</h3>
+                <p>ครอบครัวยอดนารี❤️สตรีวิทยา</p>
+                <p>จัดทำโดย.. ลุ้นสอวอไปด้วยกันนะ</p>
+                <a href="https://shorturl.asia/BlJVn" target="_blank"><i class="fab fa-line"></i> Line OPC</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>ลิงก์สำคัญ</h3>
+                <a href="index.html">หน้าหลักครอบครัวยอดนารี</a>
+                <a href="Page5.html">ข้อมูลการรับนักเรียน</a>
+                <a href="Page2.html">การเตรียมตัวการสอบเข้า</a>
+                <a href="https://www.satriwit.ac.th/" target="_blank">เว็บไซต์โรงเรียนสตรีวิทยา</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>ติดต่อเรา</h3>
+                <p>สอบถามข้อมูลเพิ่มเติม</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-line"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
         
-        const processedLabels = chartData.labels.map(label => wrapLabel(label, 16));
-        const processedNormalLabels = normalProgramData.labels.map(label => wrapLabel(label, 16));
+        <div class="footer-bottom">
+            <p>ข้อมูลอ้างอิงตามประกาศรับสมัครปีการศึกษา 2568 (โปรดตรวจสอบประกาศจากโรงเรียนอีกครั้ง)</p>
+            <p>© 2024 ครอบครัวยอดนารี❤️สตรีวิทยา. All rights reserved.</p>
+        </div>
+    </footer>
 
-        const tooltipTitleCallback = (tooltipItems) => {
-            const item = tooltipItems[0];
-            let label = item.chart.data.labels[item.dataIndex];
-            if (Array.isArray(label)) {
-                return label.join(' ');
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        // --- Logic สำหรับ Tabs ---
+        function setupTabs(tabContainerId) {
+            const tabContainer = document.getElementById(tabContainerId);
+            if (!tabContainer) return;
+
+            const tabs = Array.from(tabContainer.querySelectorAll('[data-tab]'));
+            let contentContainerId = tabContainer.id.replace('-tabs', '-content');
+            
+            if (tabContainerId === 'main-tabs') {
+                contentContainerId = 'main-content'; 
             }
-            return label;
-        };
+            
+            const contentContainer = document.getElementById(contentContainerId);
+            if (!contentContainer) return;
 
-        const commonChartOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        font: {
-                            family: "'Sarabun', sans-serif",
-                            size: 14,
+            const contents = Array.from(contentContainer.children).filter(c => c.classList.contains('main-tab-content') || c.classList.contains('nested-tab-content') || c.classList.contains('sub-nested-tab-content'));
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = tab.getAttribute('data-tab');
+
+                    tabs.forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    tab.classList.add('active');
+
+                    contents.forEach(content => {
+                        content.classList.add('hidden-content');
+                        content.classList.remove('content-enter');
+                        if (content.id === targetId) {
+                            content.classList.remove('hidden-content');
+                            setTimeout(() => {
+                                content.classList.add('content-enter');
+                            }, 10);
                         }
-                    }
-                },
-                tooltip: {
-                    callbacks: {
-                        title: tooltipTitleCallback
-                    },
-                    titleFont: { family: "'Sarabun', sans-serif", size: 16 },
-                    bodyFont: { family: "'Sarabun', sans-serif", size: 14 },
-                }
-            }
-        };
-
-        const chartInstances = {};
-
-        function initCharts() {
-            // Check if canvas elements exist before creating charts
-            const distributionCanvas = document.getElementById('programDistributionChart');
-            if (distributionCanvas) {
-                const distributionCtx = distributionCanvas.getContext('2d');
-                chartInstances.distribution = new Chart(distributionCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: processedLabels,
-                        datasets: [{
-                            label: 'จำนวนนักเรียน',
-                            data: chartData.values,
-                            backgroundColor: chartColors,
-                            borderColor: '#FFFFFF',
-                            borderWidth: 4,
-                            hoverOffset: 8
-                        }]
-                    },
-                    options: { ...commonChartOptions, cutout: '60%' }
+                    });
                 });
-            }
-
-            const comparisonCanvas = document.getElementById('programComparisonChart');
-            if(comparisonCanvas) {
-                const comparisonCtx = comparisonCanvas.getContext('2d');
-                chartInstances.comparison = new Chart(comparisonCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: processedLabels,
-                        datasets: [{
-                            label: 'จำนวนนักเรียน',
-                            data: chartData.values,
-                            backgroundColor: chartColors,
-                            borderColor: chartColors.map(color => color + 'CC'),
-                            borderWidth: 1,
-                            borderRadius: 8
-                        }]
-                    },
-                    options: { ...commonChartOptions, scales: { y: { beginAtZero: true, grid: { color: '#e2e8f0' }, ticks: { font: { family: "'Sarabun', sans-serif" } } }, x: { grid: { display: false }, ticks: { font: { family: "'Sarabun', sans-serif", size: 12 } } } } }
-                });
-            }
-
-            const normalBreakdownCanvas = document.getElementById('normalProgramBreakdownChart');
-            if(normalBreakdownCanvas) {
-                const normalBreakdownCtx = normalBreakdownCanvas.getContext('2d');
-                chartInstances.normalBreakdown = new Chart(normalBreakdownCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: processedNormalLabels,
-                        datasets: [{
-                            label: 'จำนวนนักเรียน',
-                            data: normalProgramData.values,
-                            backgroundColor: chartColors,
-                            borderColor: '#FFFFFF',
-                            borderWidth: 4,
-                            hoverOffset: 8
-                        }]
-                    },
-                    options: { ...commonChartOptions, cutout: '60%' }
-                });
-            }
+            });
         }
 
-        function destroyCharts() {
-            for (const chartName in chartInstances) {
-                if (chartInstances[chartName]) {
-                    chartInstances[chartName].destroy();
-                    chartInstances[chartName] = null;
-                }
-            }
-        }
+        setupTabs('main-tabs');
+        setupTabs('special-nested-tabs');
+        setupTabs('normal-nested-tabs');
+        setupTabs('exam-sub-nested-tabs'); 
+
         
-        // Main Tab Switching Logic
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const tabId = button.getAttribute('data-tab');
+        // --- Logic สำหรับ Dropdown Menu ---
+        const button = document.getElementById("dropdownButton");
+        const menu = document.getElementById("dropdownMenu");
+        
+        if (button && menu) {
+            let isOpen = false;
 
-                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-                const activeTabContent = document.getElementById(tabId);
-                if(activeTabContent) activeTabContent.classList.add('active');
-                
-                destroyCharts(); // Always destroy charts on tab switch
-                if (tabId === 'overview') {
-                    initCharts(); // Re-initialize charts only for the overview tab
+            button.addEventListener("click", (e) => {
+                e.stopPropagation();
+                isOpen = !isOpen;
+                if (isOpen) {
+                button.innerHTML = "✖ ปิดเมนู";
+                menu.classList.remove("hidden");
+                setTimeout(() => menu.classList.add("show"), 10);
+                } else {
+                button.innerHTML = "☰ เมนูหลัก";
+                menu.classList.remove("show");
+                setTimeout(() => menu.classList.add("hidden"), 300);
                 }
             });
-        });
 
-        // Sub-Tab Switching Logic
-        document.querySelectorAll('.sub-tab-button').forEach(button => {
-            button.addEventListener('click', () => {
-                const tabId = button.getAttribute('data-sub-tab');
-
-                document.querySelectorAll('.sub-tab-button').forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                document.querySelectorAll('.sub-tab-content').forEach(content => content.classList.remove('active'));
-                const activeSubTabContent = document.getElementById(tabId);
-                if(activeSubTabContent) activeSubTabContent.classList.add('active');
+            document.addEventListener("click", (e) => {
+                if (!menu.contains(e.target) && !button.contains(e.target)) {
+                if (isOpen) {
+                    isOpen = false;
+                    button.innerHTML = "☰ เมนูหลัก";
+                    menu.classList.remove("show");
+                    setTimeout(() => menu.classList.add("hidden"), 300);
+                }
+                }
             });
-        });
+        }
+    });
+</script>
 
-        // Initial chart rendering
-        document.addEventListener('DOMContentLoaded', () => {
-            if (document.getElementById('overview').classList.contains('active')) {
-                initCharts();
-            }
-            const initialActiveSubTab = document.querySelector('.sub-tab-button.active');
-            if (initialActiveSubTab) {
-                const subTabId = initialActiveSubTab.getAttribute('data-sub-tab');
-                const subTabContent = document.getElementById(subTabId);
-                if(subTabContent) subTabContent.classList.add('active');
-            }
-        });
-    </script>
 </body>
 </html>
-
-
