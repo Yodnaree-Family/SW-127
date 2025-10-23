@@ -15,32 +15,110 @@
     <style>
         body {
             font-family: 'Mali', cursive;
-            background-color: #ffffff;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
             font-weight: 500;
         }
         
-        /* Watermark */
-        body::before {
-            content: "ครอบครัวยอดนารี❤️สตรีวิทยา";
+        .header-container {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-30deg);
-            font-size: 5rem;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 100%);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            padding: 0.75rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .logo-icon {
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .logo-text {
+            color: white;
+            font-family: 'Mali', cursive;
             font-weight: 700;
-            color: rgba(0, 0, 0, 0.03);
-            white-space: nowrap;
+            font-size: 1.3rem;
+        }
+        
+        .dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background: #ffffff;
+            color: #8B0000;
+            font-family: 'Mali', cursive;
+            font-weight: 700;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.25s ease;
+        }
+        .dropdown-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            right: 0;
+            margin-top: 0.75rem;
+            width: 280px;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-15px);
             pointer-events: none;
-            z-index: 0;
+            transition: all 0.35s ease;
+            border-top: 5px solid #8B0000; 
+        }
+        .dropdown-menu.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #8B0000;
+            font-family: 'Mali', cursive;
+            font-weight: 600;
+            text-decoration: none;
+            background: white;
+            transition: all 0.25s ease;
+        }
+        .dropdown-menu a:hover {
+            background: #ffeaea;
+            color: #8B0000;
+            padding-left: 24px;
         }
 
         /* Main Tabs */
         .main-tab-btn {
             @apply px-6 sm:px-10 py-4 sm:py-5 text-base sm:text-lg rounded-2xl transition-all duration-300 ease-in-out transform;
-            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
-            color: #9f1239;
-            border: 2px solid #fbcfe8;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            color: #2c3e50;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             font-family: 'Mali', cursive;
             font-weight: 600;
             position: relative;
@@ -61,13 +139,14 @@
         }
         .main-tab-btn:hover {
             @apply shadow-xl transform -translate-y-1;
-            border-color: #f9a8d4;
+            border-color: #8B0000;
+            color: #8B0000;
         }
         .main-tab-btn.active {
-            background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 100%);
             color: #ffffff;
             @apply font-bold shadow-2xl scale-105;
-            border-color: #ec4899;
+            border-color: #8B0000;
         }
         
         /* Nested Tabs */
@@ -76,10 +155,10 @@
         }
         .nested-tab-btn {
             @apply px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base rounded-2xl transition-all duration-300 ease-in-out transform;
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            color: #1e40af;
-            border: 2px solid #bfdbfe;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            color: #2c3e50;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             font-family: 'Mali', cursive;
             font-weight: 600;
             position: relative;
@@ -100,13 +179,14 @@
         }
         .nested-tab-btn:hover {
             @apply shadow-xl transform -translate-y-1;
-            border-color: #93c5fd;
+            border-color: #8B0000;
+            color: #8B0000;
         }
         .nested-tab-btn.active {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 100%);
             color: #ffffff;
             @apply font-bold shadow-2xl scale-105;
-            border-color: #60a5fa;
+            border-color: #8B0000;
         }
         
         /* Sub-Nested Tabs */
@@ -115,7 +195,7 @@
         }
         .sub-nested-tab-btn {
             @apply px-6 sm:px-8 py-3 text-base rounded-2xl transition-all duration-300 ease-in-out transform;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
             font-family: 'Mali', cursive;
             font-weight: 600;
             position: relative;
@@ -143,40 +223,40 @@
 
         /* Colors for Sub-Nested Tabs */
         .tab-ep {
-            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
-            color: #9f1239;
-            border: 2px solid #fbcfe8;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1565c0;
+            border: 2px solid #90caf9;
         }
         .tab-ep.active {
-            background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
             color: #ffffff;
-            border-color: #ec4899;
+            border-color: #1565c0;
         }
         .tab-smte {
-            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
-            color: #7c3aed;
-            border: 2px solid #e9d5ff;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: #2e7d32;
+            border: 2px solid #a5d6a7;
         }
         .tab-smte.active {
-            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
             color: #ffffff;
-            border-color: #a78bfa;
+            border-color: #2e7d32;
         }
         .tab-gifted {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            color: #15803d;
-            border: 2px solid #bbf7d0;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            color: #ef6c00;
+            border: 2px solid #ffb74d;
         }
         .tab-gifted.active {
-            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            background: linear-gradient(135deg, #ef6c00 0%, #e65100 100%);
             color: #ffffff;
-            border-color: #4ade80;
+            border-color: #ef6c00;
         }
 
         /* Content Containers */
         .main-content-container {
             @apply bg-white rounded-3xl shadow-xl p-6 sm:p-8 md:p-10 text-base z-10 relative;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.07);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
         .nested-content-container {
             @apply pt-4; 
@@ -188,14 +268,12 @@
         .content-enter { display: block; opacity: 1; }
         
         /* Info Cards */
-        .list-item { @apply flex items-start space-x-3; }
-        .list-icon { @apply text-pink-500 mt-1.5 flex-shrink-0 w-5 h-5; }
-        
         .info-card { 
             @apply p-6 sm:p-8 rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 ease-in-out;
-            border: 1px solid rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.05);
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
         }
         .info-card::before {
             content: '';
@@ -204,110 +282,29 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background: linear-gradient(90deg, #ec4899, #8b5cf6, #10b981);
-        }
-        .card-header-icon { @apply text-3xl mb-3 text-center; }
-
-        /* Header */
-        .header-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(135deg, #a01a1a 0%, #b91c1c 100%);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-            padding: 0.75rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-left: 1rem;
-            padding-right: 1rem;
+            background: linear-gradient(90deg, #8B0000, #B22222);
         }
         
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+        .exam-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-left: 5px solid #8B0000;
         }
         
-        .logo-icon {
-            font-size: 1.5rem;
-            color: white;
+        .subject-card {
+            @apply p-4 rounded-2xl shadow-md transition-all duration-300;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid #e9ecef;
+        }
+        .subject-card:hover {
+            @apply shadow-lg transform -translate-y-1;
+            border-color: #8B0000;
         }
         
-        .logo-text {
-            color: white;
-            font-family: 'Mali', cursive;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-        
-        .dropdown-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-btn {
-            background: #ffffff;
-            color: #b91c1c;
-            font-family: 'Mali', cursive;
-            font-weight: 700;
-            border: none;
-            padding: 0.8rem 1.8rem;
-            border-radius: 1rem;
-            cursor: pointer;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.25s ease;
-        }
-        .dropdown-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
-        
-        .dropdown-menu {
-            position: absolute;
-            right: 0;
-            margin-top: 0.75rem;
-            width: 280px;
-            background: white;
-            border-radius: 1rem;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.2);
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(-15px);
-            pointer-events: none;
-            transition: all 0.35s ease;
-            border-top: 5px solid #b91c1c; 
-        }
-        .dropdown-menu.show {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-        .dropdown-menu a {
-            display: block;
-            padding: 12px 20px;
-            color: #b91c1c;
-            font-family: 'Mali', cursive;
-            font-weight: 600;
-            text-decoration: none;
-            background: white;
-            transition: all 0.25s ease;
-        }
-        .dropdown-menu a:hover {
-            background: #fee2e2;
-            color: #7f1d1d;
-            padding-left: 24px;
-        }
-
-        /* Footer */
         .footer-container {
-            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             padding: 3rem 1rem;
             margin-top: 3rem;
-            border-top: 5px solid #ec4899;
+            border-top: 5px solid #8B0000;
         }
         
         .footer-content {
@@ -321,14 +318,14 @@
         .footer-section h3 {
             font-family: 'Mali', cursive;
             font-weight: 700;
-            color: #9f1239;
+            color: #ffffff;
             margin-bottom: 1rem;
             font-size: 1.25rem;
         }
         
         .footer-section p, .footer-section a {
             font-family: 'Mali', cursive;
-            color: #6b7280;
+            color: #bdc3c7;
             margin-bottom: 0.5rem;
             display: block;
             text-decoration: none;
@@ -336,7 +333,7 @@
         }
         
         .footer-section a:hover {
-            color: #9f1239;
+            color: #ffffff;
         }
         
         .footer-bottom {
@@ -345,9 +342,9 @@
             text-align: center;
             padding-top: 2rem;
             margin-top: 2rem;
-            border-top: 1px solid #fbcfe8;
+            border-top: 1px solid #4a5f7a;
             font-family: 'Mali', cursive;
-            color: #6b7280;
+            color: #bdc3c7;
             font-size: 0.875rem;
         }
         
@@ -364,7 +361,7 @@
             justify-content: center;
             width: 50px;
             height: 50px;
-            background: #ec4899;
+            background: #8B0000;
             color: white;
             border-radius: 50%;
             transition: all 0.3s;
@@ -372,7 +369,7 @@
         }
         
         .social-icons a:hover {
-            background: #be185d;
+            background: #B22222;
             transform: translateY(-3px);
         }
 
@@ -398,12 +395,6 @@
                 font-size: 1.1rem;
                 padding: 0.7rem 1.4rem;
             }
-            body::before {
-                font-size: 2.5rem;
-                width: 90%;
-                white-space: normal;
-                text-align: center;
-            }
             .main-tab-btn {
                  @apply px-5 py-3 text-base;
             }
@@ -420,7 +411,7 @@
 <div class="header-container">
     <div class="logo-container">
         <i class="fas fa-school logo-icon"></i>
-        <span class="logo-text">เตรียมสอบเข้า ม.1 โรงเรียนสตรีวิทยา</span>
+        <span class="logo-text">ครอบครัวยอดนารี❤️สตรีวิทยา</span>
     </div>
     
     <div class="dropdown-wrapper relative inline-block">
@@ -445,11 +436,11 @@
     <div class="container mx-auto max-w-5xl px-4">
         <header class="text-center mb-8">
              <div class="inline-block bg-white p-4 rounded-full shadow-lg mb-4">
-                 <i class="fas fa-school text-4xl text-pink-600"></i>
+                 <i class="fas fa-graduation-cap text-4xl text-red-700"></i>
              </div>
-            <h1 class="text-3xl font-bold text-pink-600 mb-2">การเตรียมตัวสอบเข้าม.1 โรงเรียนสตรีวิทยา</h1>
-            <p class="text-2xl font-bold text-rose-700 mb-6">ปีการศึกษา 2569</p>
-            <div class="mt-4 inline-block bg-rose-100 text-rose-800 rounded-full px-4 py-2 text-sm shadow-inner">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">การเตรียมตัวสอบเข้าม.1 โรงเรียนสตรีวิทยา</h1>
+            <p class="text-2xl font-bold text-red-700 mb-6">ปีการศึกษา 2569</p>
+            <div class="mt-4 inline-block bg-red-50 text-red-800 rounded-full px-4 py-2 text-sm shadow-inner border border-red-200">
                 จัดทำโดย.. ลุ้นสอวอไปด้วยกันนะ ❤️
             </div>
         </header>
@@ -487,7 +478,7 @@
                     <div id="special-nested-content" class="nested-content-container">
                         <!-- เนื้อหา ข้อมูลการสอบ (พิเศษ) -->
                         <div id="special-exam" class="nested-tab-content content-enter">
-                            <h2 class="text-2xl font-semibold mb-6 text-pink-700 text-center">ข้อมูลการสอบ (ห้องเรียนพิเศษ)</h2>
+                            <h2 class="text-2xl font-semibold mb-6 text-red-700 text-center">ข้อมูลการสอบ (ห้องเรียนพิเศษ)</h2>
                             <!-- Sub-Nested Tabs -->
                             <div class="sub-nested-tabs-container" id="exam-sub-nested-tabs">
                                 <button class="sub-nested-tab-btn tab-ep active" data-tab="exam-ep">
@@ -503,46 +494,93 @@
                             <div id="exam-sub-nested-content">
                                 <div id="exam-ep" class="sub-nested-tab-content content-enter">
                                     <!-- Info Card -->
-                                    <div class="info-card max-w-md mx-auto bg-pink-50">
-                                        <h3 class="font-bold text-pink-800 text-xl mb-4 text-center">English Program (EP)</h3>
-                                        <h3 class="font-normal text-blue-600 text-lg mb-3">📝แจกข้อสอบตามรายวิชา เก็บข้อสอบเมื่อหมดเวลา</h3>
+                                    <div class="info-card max-w-md mx-auto exam-card">
+                                        <h3 class="font-bold text-blue-700 text-xl mb-4 text-center">English Program (EP)</h3>
+                                        <div class="bg-blue-50 p-4 rounded-xl mb-4 text-center">
+                                            <p class="text-blue-700 font-semibold">📝 แจกข้อสอบตามรายวิชา เก็บข้อสอบเมื่อหมดเวลา</p>
+                                        </div>
                                         <div class="space-y-3">
-                                            <div class="text-center mb-4"><span class="font-bold text-3xl text-pink-600">200</span> <span class="text-gray-600">คะแนน</span></div>
-                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-language text-pink-500 mr-2"></i>ภาษาอังกฤษ (90 นาที)</span> <span class="font-semibold">80 คะแนน</span></div>
-                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-calculator text-pink-500 mr-2"></i>คณิตศาสตร์ (60 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
-                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-flask text-pink-500 mr-2"></i>วิทยาศาสตร์ (60 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
-                                            <div class="mt-4 p-3 bg-yellow-100 text-yellow-800 rounded-xl text-center font-bold shadow-inner border border-yellow-200"><i class="fas fa-star mr-2"></i>สอบสัมภาษณ์ 20 คะแนน</div>
-                                            <p class="text-lg font-semibold text-blue-800 pt-4 text-center">ข้อสอบปรนัยและอัตนัย (โจทย์ภาษาไทย และภาษาอังกฤษ)</p>
-                                            <p class="text-sm text-center text-red-500 -mt-2">(ออกข้อสอบโดยโรงเรียนสตรีวิทยา)</p>
+                                            <div class="text-center mb-4">
+                                                <span class="font-bold text-4xl text-blue-700">200</span> 
+                                                <span class="text-gray-600 text-lg">คะแนน</span>
+                                            </div>
+                                            <div class="text-gray-700 bg-white p-4 rounded-xl flex justify-between items-center shadow-inner border border-blue-100">
+                                                <span><i class="fas fa-language text-blue-500 mr-2"></i>ภาษาอังกฤษ (90 นาที)</span> 
+                                                <span class="font-semibold text-blue-700">80 คะแนน</span>
+                                            </div>
+                                            <div class="text-gray-700 bg-white p-4 rounded-xl flex justify-between items-center shadow-inner border border-blue-100">
+                                                <span><i class="fas fa-calculator text-blue-500 mr-2"></i>คณิตศาสตร์ (60 นาที)</span> 
+                                                <span class="font-semibold text-blue-700">50 คะแนน</span>
+                                            </div>
+                                            <div class="text-gray-700 bg-white p-4 rounded-xl flex justify-between items-center shadow-inner border border-blue-100">
+                                                <span><i class="fas fa-flask text-blue-500 mr-2"></i>วิทยาศาสตร์ (60 นาที)</span> 
+                                                <span class="font-semibold text-blue-700">50 คะแนน</span>
+                                            </div>
+                                            <div class="mt-4 p-4 bg-yellow-100 text-yellow-800 rounded-xl text-center font-bold shadow-inner border border-yellow-300">
+                                                <i class="fas fa-star mr-2"></i>สอบสัมภาษณ์ 20 คะแนน
+                                            </div>
+                                            <div class="mt-4 p-4 bg-blue-50 rounded-xl text-center">
+                                                <p class="text-lg font-semibold text-blue-800">ข้อสอบปรนัยและอัตนัย (โจทย์ภาษาไทย และภาษาอังกฤษ)</p>
+                                                <p class="text-sm text-red-500 mt-1">(ออกข้อสอบโดยโรงเรียนสตรีวิทยา)</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div id="exam-smte" class="sub-nested-tab-content hidden-content">
                                     <!-- Info Card -->
-                                    <div class="info-card max-w-md mx-auto bg-purple-50">
-                                        <h3 class="font-bold text-purple-800 text-xl mb-4 text-center">SMTE</h3>
-                                        <h3 class="font-normal text-blue-600 text-lg mb-3">📝แจกข้อสอบตามรายวิชา เก็บข้อสอบเมื่อหมดเวลา</h3>
+                                    <div class="info-card max-w-md mx-auto exam-card">
+                                        <h3 class="font-bold text-green-700 text-xl mb-4 text-center">SMTE</h3>
+                                        <div class="bg-green-50 p-4 rounded-xl mb-4 text-center">
+                                            <p class="text-green-700 font-semibold">📝 แจกข้อสอบตามรายวิชา เก็บข้อสอบเมื่อหมดเวลา</p>
+                                        </div>
                                         <div class="space-y-3">
-                                            <div class="text-center mb-4"><span class="font-bold text-3xl text-purple-600">100</span> <span class="text-gray-600">คะแนน</span></div>
-                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-calculator text-purple-500 mr-2"></i>คณิตศาสตร์ (120 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
-                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-vial text-purple-500 mr-2"></i>วิทยาศาสตร์ (120 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
-                                            <p class="text-lg font-semibold text-blue-800 pt-4 text-center">ข้อสอบปรนัยและอัตนัย</p>
-                                            <p class="text-sm text-center text-red-500 -mt-2">(ข้อสอบกลาง สพฐ.)</p>
+                                            <div class="text-center mb-4">
+                                                <span class="font-bold text-4xl text-green-700">100</span> 
+                                                <span class="text-gray-600 text-lg">คะแนน</span>
+                                            </div>
+                                            <div class="text-gray-700 bg-white p-4 rounded-xl flex justify-between items-center shadow-inner border border-green-100">
+                                                <span><i class="fas fa-calculator text-green-500 mr-2"></i>คณิตศาสตร์ (120 นาที)</span> 
+                                                <span class="font-semibold text-green-700">50 คะแนน</span>
+                                            </div>
+                                            <div class="text-gray-700 bg-white p-4 rounded-xl flex justify-between items-center shadow-inner border border-green-100">
+                                                <span><i class="fas fa-vial text-green-500 mr-2"></i>วิทยาศาสตร์ (120 นาที)</span> 
+                                                <span class="font-semibold text-green-700">50 คะแนน</span>
+                                            </div>
+                                            <div class="mt-4 p-4 bg-green-50 rounded-xl text-center">
+                                                <p class="text-lg font-semibold text-green-800">ข้อสอบปรนัยและอัตนัย</p>
+                                                <p class="text-sm text-red-500 mt-1">(ข้อสอบกลาง สพฐ.)</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div id="exam-gifted" class="sub-nested-tab-content hidden-content">
                                     <!-- Info Card -->
-                                    <div class="info-card max-w-md mx-auto bg-green-50">
-                                        <h3 class="font-bold text-green-800 text-xl mb-4 text-center">Gifted Math</h3>
-                                        <h3 class="font-normal text-blue-600 text-lg mb-3">📝แจกข้อสอบตามรายวิชา เก็บข้อสอบเมื่อหมดเวลา</h3>
+                                    <div class="info-card max-w-md mx-auto exam-card">
+                                        <h3 class="font-bold text-orange-600 text-xl mb-4 text-center">Gifted Math</h3>
+                                        <div class="bg-orange-50 p-4 rounded-xl mb-4 text-center">
+                                            <p class="text-orange-600 font-semibold">📝 แจกข้อสอบตามรายวิชา เก็บข้อสอบเมื่อหมดเวลา</p>
+                                        </div>
                                         <div class="space-y-3">
-                                            <div class="text-center mb-4"><span class="font-bold text-3xl text-green-600">110</span> <span class="text-gray-600">คะแนน</span></div>
-                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-calculator text-green-500 mr-2"></i>คณิตศาสตร์ (90 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
-                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-flask text-green-500 mr-2"></i>วิทยาศาสตร์ (90 นาที)</span> <span class="font-semibold">50 คะแนน</span></div>
-                                            <div class="text-gray-700 bg-white p-3 rounded-xl flex justify-between items-center shadow-inner border"><span><i class="fas fa-language text-green-500 mr-2"></i>ภาษาอังกฤษ (30 นาที)</span> <span class="font-semibold">10 คะแนน</span></div>
-                                            <p class="text-lg font-semibold text-blue-800 pt-4 text-center">ข้อสอบปรนัยและอัตนัย</p>
-                                            <p class="text-sm text-center text-red-500 -mt-2">(ออกข้อสอบโดยโรงเรียนสตรีวิทยา)</p>
+                                            <div class="text-center mb-4">
+                                                <span class="font-bold text-4xl text-orange-600">110</span> 
+                                                <span class="text-gray-600 text-lg">คะแนน</span>
+                                            </div>
+                                            <div class="text-gray-700 bg-white p-4 rounded-xl flex justify-between items-center shadow-inner border border-orange-100">
+                                                <span><i class="fas fa-calculator text-orange-500 mr-2"></i>คณิตศาสตร์ (90 นาที)</span> 
+                                                <span class="font-semibold text-orange-600">50 คะแนน</span>
+                                            </div>
+                                            <div class="text-gray-700 bg-white p-4 rounded-xl flex justify-between items-center shadow-inner border border-orange-100">
+                                                <span><i class="fas fa-flask text-orange-500 mr-2"></i>วิทยาศาสตร์ (90 นาที)</span> 
+                                                <span class="font-semibold text-orange-600">50 คะแนน</span>
+                                            </div>
+                                            <div class="text-gray-700 bg-white p-4 rounded-xl flex justify-between items-center shadow-inner border border-orange-100">
+                                                <span><i class="fas fa-language text-orange-500 mr-2"></i>ภาษาอังกฤษ (30 นาที)</span> 
+                                                <span class="font-semibold text-orange-600">10 คะแนน</span>
+                                            </div>
+                                            <div class="mt-4 p-4 bg-orange-50 rounded-xl text-center">
+                                                <p class="text-lg font-semibold text-orange-700">ข้อสอบปรนัยและอัตนัย</p>
+                                                <p class="text-sm text-red-500 mt-1">(ออกข้อสอบโดยโรงเรียนสตรีวิทยา)</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -550,46 +588,108 @@
                         </div>
                         <!-- เนื้อหา คุณสมบัติ (พิเศษ) -->
                         <div id="special-quals" class="nested-tab-content hidden-content">
-                            <h2 class="text-2xl font-semibold mb-6 text-pink-700 text-center">✅ คุณสมบัติเฉพาะ</h2>
+                            <h2 class="text-2xl font-semibold mb-6 text-red-700 text-center">✅ คุณสมบัติเฉพาะ</h2>
                             <div class="grid lg:grid-cols-3 gap-6">
                                 <!-- Info Card -->
-                                <div class="info-card text-center bg-pink-50">
-                                    <p class="card-header-icon text-pink-500"><i class="fas fa-globe-americas"></i></p>
-                                    <h3 class="font-bold text-pink-800 text-lg mb-3">English Program (EP)</h3>
-                                    <ul class="space-y-3 text-gray-700 text-left"><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยรวม <strong>ไม่ต่ำกว่า 3.50</strong></span></li><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยภาษาอังกฤษ <strong>ไม่ต่ำกว่า 3.50</strong></span></li></ul>
+                                <div class="info-card text-center">
+                                    <div class="card-header-icon text-blue-500 mb-3">
+                                        <i class="fas fa-globe-americas text-4xl"></i>
+                                    </div>
+                                    <h3 class="font-bold text-blue-700 text-lg mb-3">English Program (EP)</h3>
+                                    <ul class="space-y-3 text-gray-700 text-left">
+                                        <li class="flex items-start">
+                                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                            <span>เกรดเฉลี่ยรวม <strong class="text-blue-700">ไม่ต่ำกว่า 3.50</strong></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                            <span>เกรดเฉลี่ยภาษาอังกฤษ <strong class="text-blue-700">ไม่ต่ำกว่า 3.50</strong></span>
+                                        </li>
+                                    </ul>
                                 </div>
                                 <!-- Info Card -->
-                                <div class="info-card text-center bg-purple-50">
-                                    <p class="card-header-icon text-purple-500"><i class="fas fa-atom"></i></p>
-                                    <h3 class="font-bold text-purple-800 text-lg mb-3">SMTE</h3>
-                                    <ul class="space-y-3 text-gray-700 text-left"><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยรวม <strong>ไม่ต่ำกว่า 3.50</strong></span></li><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยคณิตศาสตร์ <strong>ไม่ต่ำกว่า 3.50</strong></span></li><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยวิทยาศาสตร์ <strong>ไม่ต่ำกว่า 3.50</strong></span></li></ul>
+                                <div class="info-card text-center">
+                                    <div class="card-header-icon text-green-500 mb-3">
+                                        <i class="fas fa-atom text-4xl"></i>
+                                    </div>
+                                    <h3 class="font-bold text-green-700 text-lg mb-3">SMTE</h3>
+                                    <ul class="space-y-3 text-gray-700 text-left">
+                                        <li class="flex items-start">
+                                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                            <span>เกรดเฉลี่ยรวม <strong class="text-green-700">ไม่ต่ำกว่า 3.50</strong></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                            <span>เกรดเฉลี่ยคณิตศาสตร์ <strong class="text-green-700">ไม่ต่ำกว่า 3.50</strong></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                            <span>เกรดเฉลี่ยวิทยาศาสตร์ <strong class="text-green-700">ไม่ต่ำกว่า 3.50</strong></span>
+                                        </li>
+                                    </ul>
                                 </div>
                                 <!-- Info Card -->
-                                <div class="info-card text-center bg-green-50">
-                                    <p class="card-header-icon text-green-500"><i class="fas fa-brain"></i></p>
-                                    <h3 class="font-bold text-green-800 text-lg mb-3">Gifted Math</h3>
-                                    <ul class="space-y-3 text-gray-700 text-left"><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยรวม <strong>ไม่ต่ำกว่า 3.50</strong></span></li><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยคณิตศาสตร์ <strong>ไม่ต่ำกว่า 3.50</strong></span></li><li class="flex"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i><span>เกรดเฉลี่ยวิทยาศาสตร์ <strong>ไม่ต่ำกว่า 3.50</strong></span></li></ul>
+                                <div class="info-card text-center">
+                                    <div class="card-header-icon text-orange-500 mb-3">
+                                        <i class="fas fa-brain text-4xl"></i>
+                                    </div>
+                                    <h3 class="font-bold text-orange-600 text-lg mb-3">Gifted Math</h3>
+                                    <ul class="space-y-3 text-gray-700 text-left">
+                                        <li class="flex items-start">
+                                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                            <span>เกรดเฉลี่ยรวม <strong class="text-orange-600">ไม่ต่ำกว่า 3.50</strong></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                            <span>เกรดเฉลี่ยคณิตศาสตร์ <strong class="text-orange-600">ไม่ต่ำกว่า 3.50</strong></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                            <span>เกรดเฉลี่ยวิทยาศาสตร์ <strong class="text-orange-600">ไม่ต่ำกว่า 3.50</strong></span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                         <!-- เนื้อหา เอกสาร (พิเศษ) -->
                         <div id="special-docs" class="nested-tab-content hidden-content">
-                            <h2 class="text-2xl font-semibold mb-6 text-pink-700 text-center">🍀 เอกสารสมัคร (ห้องเรียนพิเศษ)</h2>
+                            <h2 class="text-2xl font-semibold mb-6 text-red-700 text-center">🍀 เอกสารสมัคร (ห้องเรียนพิเศษ)</h2>
                             <!-- Info Card -->
-                            <div class="info-card max-w-2xl mx-auto bg-gray-50">
-                                <ol class="space-y-4 text-gray-700 divide-y divide-pink-100">
-                                    <li class="list-item pt-3 first:pt-0"><i class="fas fa-camera list-icon"></i><span> รูปถ่าย 1.5 นิ้ว (ไม่เกิน 6 เดือน) <span class="font-bold text-pink-600 ml-2">จำนวน 4 รูป</span></span></li>
-                                    <li class="list-item pt-3"><i class="fas fa-id-card list-icon"></i><span> สำเนาทะเบียนบ้าน (นักเรียน)</span></li>
-                                    <li class="list-item pt-3"><i class="fas fa-users list-icon"></i><span> สำเนาทะเบียนบ้าน (ผู้ปกครอง)</span></li>
-                                    <li class="list-item pt-3"><i class="fas fa-graduation-cap list-icon"></i><span> สำเนารับรองกำลังศึกษาชั้น ป.6 (ปพ.7)</span></li>
-                                    <li class="list-item pt-3"><i class="fas fa-file-invoice list-icon"></i><span> สำเนาระเบียนแสดงผลการเรียน ปพ.1 หรือ ปพ.6 (ป.4 และ ป.5)</span></li>
-                                    <li class="list-item pt-3"><i class="fas fa-file-alt list-icon"></i><span> เอกสารอื่นๆ (ถ้ามี) เช่น ใบเปลี่ยนชื่อ-สกุล</span></li>
+                            <div class="info-card max-w-2xl mx-auto">
+                                <ol class="space-y-4 text-gray-700">
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-camera text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>รูปถ่าย 1.5 นิ้ว (ไม่เกิน 6 เดือน) <span class="font-bold text-red-600 ml-2">จำนวน 4 รูป</span></span>
+                                    </li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-id-card text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>สำเนาทะเบียนบ้าน (นักเรียน)</span>
+                                    </li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-users text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>สำเนาทะเบียนบ้าน (ผู้ปกครอง)</span>
+                                    </li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-graduation-cap text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>สำเนารับรองกำลังศึกษาชั้น ป.6 (ปพ.7)</span>
+                                    </li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-file-invoice text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>สำเนาระเบียนแสดงผลการเรียน ปพ.1 หรือ ปพ.6 (ป.4 และ ป.5)</span>
+                                    </li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-file-alt text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>เอกสารอื่นๆ (ถ้ามี) เช่น ใบเปลี่ยนชื่อ-สกุล</span>
+                                    </li>
                                 </ol>
-                                <p class="text-sm text-red-600 pl-8 pt-4 border-t border-pink-100 mt-4">*นำฉบับจริงมาแสดง และนักเรียนลงนามรับรองสำเนาทุกฉบับ</p>
+                                <div class="mt-6 p-4 bg-red-50 rounded-xl border-l-4 border-red-500">
+                                    <p class="text-sm text-red-600 font-semibold">*นำฉบับจริงมาแสดง และนักเรียนลงนามรับรองสำเนาทุกฉบับ</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
                 <!-- === ห้องเรียนปกติ === -->
                 <div id="normal-program-main" class="main-tab-content hidden-content">
                     <!-- Nested Tabs -->
@@ -604,49 +704,93 @@
                     <div id="normal-nested-content" class="nested-content-container">
                         <!-- เนื้อหา ข้อมูลการสอบ (ปกติ) -->
                         <div id="normal-exam" class="nested-tab-content content-enter">
-                            <h2 class="text-2xl font-semibold mb-6 text-pink-700 text-center">ข้อมูลการสอบ (ห้องเรียนปกติ)</h2>
+                            <h2 class="text-2xl font-semibold mb-6 text-red-700 text-center">ข้อมูลการสอบ (ห้องเรียนปกติ)</h2>
                             <!-- Info Card -->
-                            <div class="info-card bg-blue-50">
-                                <h3 class="font-bold text-gray-800 text-lg mb-3">วิชาที่สอบ (รวม 100 คะแนน วิชาละ 35 นาที)</h3>
-                                <h3 class="font-normal text-blue-600 text-lg mb-3">📝 การแจกข้อสอบ:ข้อสอบแบ่งเป็น 2 ชุด</h3>
-                                <h3 class="font-normal text-blue-600 text-lg mb-3">⏱️ การเก็บ: เมื่อหมดเวลา เก็บข้อสอบชุดนั้นทันที</h3>
+                            <div class="info-card">
+                                <h3 class="font-bold text-gray-800 text-xl mb-4">วิชาที่สอบ (รวม 100 คะแนน วิชาละ 35 นาที)</h3>
+                                <div class="bg-blue-50 p-4 rounded-xl mb-6">
+                                    <p class="text-blue-700 font-semibold">📝 การแจกข้อสอบ: ข้อสอบแบ่งเป็น 2 ชุด</p>
+                                    <p class="text-blue-700 font-semibold mt-2">⏱️ การเก็บ: เมื่อหมดเวลา เก็บข้อสอบชุดนั้นทันที</p>
+                                </div>
                                 <!-- Updated subject boxes -->
                                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center my-6">
-                                    <div class="p-4 bg-rose-50 rounded-3xl border border-rose-200 shadow-md"><i class="fas fa-calculator text-rose-500 mb-1"></i><p>คณิตศาสตร์</p><p class="font-bold">20 คะแนน</p></div>
-                                    <div class="p-4 bg-blue-100 rounded-3xl border border-blue-200 shadow-md"><i class="fas fa-book text-blue-500 mb-1"></i><p>ภาษาไทย</p><p class="font-bold">20 คะแนน</p></div>
-                                    <div class="p-4 bg-green-50 rounded-3xl border border-green-200 shadow-md"><i class="fas fa-language text-green-500 mb-1"></i><p>ภาษาอังกฤษ</p><p class="font-bold">20 คะแนน</p></div>
-                                    <div class="p-4 bg-yellow-50 rounded-3xl border border-yellow-200 shadow-md"><i class="fas fa-flask text-yellow-600 mb-1"></i><p>วิทยาศาสตร์</p><p class="font-bold">20 คะแนน</p></div>
-                                    <div class="p-4 bg-purple-50 rounded-3xl border border-purple-200 shadow-md"><i class="fas fa-landmark text-purple-500 mb-1"></i><p>สังคมศึกษา</p><p class="font-bold">20 คะแนน</p></div>
+                                    <div class="subject-card">
+                                        <i class="fas fa-calculator text-red-500 text-2xl mb-2"></i>
+                                        <p class="font-semibold">คณิตศาสตร์</p>
+                                        <p class="font-bold text-red-600">20 คะแนน</p>
+                                    </div>
+                                    <div class="subject-card">
+                                        <i class="fas fa-book text-blue-500 text-2xl mb-2"></i>
+                                        <p class="font-semibold">ภาษาไทย</p>
+                                        <p class="font-bold text-blue-600">20 คะแนน</p>
+                                    </div>
+                                    <div class="subject-card">
+                                        <i class="fas fa-language text-green-500 text-2xl mb-2"></i>
+                                        <p class="font-semibold">ภาษาอังกฤษ</p>
+                                        <p class="font-bold text-green-600">20 คะแนน</p>
+                                    </div>
+                                    <div class="subject-card">
+                                        <i class="fas fa-flask text-yellow-600 text-2xl mb-2"></i>
+                                        <p class="font-semibold">วิทยาศาสตร์</p>
+                                        <p class="font-bold text-yellow-600">20 คะแนน</p>
+                                    </div>
+                                    <div class="subject-card">
+                                        <i class="fas fa-landmark text-purple-500 text-2xl mb-2"></i>
+                                        <p class="font-semibold">สังคมศึกษา</p>
+                                        <p class="font-bold text-purple-600">20 คะแนน</p>
+                                    </div>
                                 </div>
-                                <p class="text-lg font-semibold text-blue-800 mt-4 text-center">ข้อสอบปรนัย 4 ตัวเลือก</p>
-                                <p class="text-sm text-center text-red-500 -mt-1">(ออกข้อสอบโดยโรงเรียนสตรีวิทยา)</p>
+                                <div class="mt-6 p-4 bg-blue-50 rounded-xl text-center">
+                                    <p class="text-lg font-semibold text-blue-800">ข้อสอบปรนัย 4 ตัวเลือก</p>
+                                    <p class="text-sm text-red-500 mt-1">(ออกข้อสอบโดยโรงเรียนสตรีวิทยา)</p>
+                                </div>
                             
-                                <div class="mt-6 pt-6 border-t border-gray-200">
-                                    <h3 class="font-bold text-gray-800 text-lg flex items-center gap-2 mb-2"><i class="fas fa-user-check text-green-500"></i>คุณสมบัติ</h3>
-                                    <p class="text-gray-600 mb-4">ไม่ได้ระบุเกรดเฉลี่ยขั้นต่ำ (พิจารณาคะแนนสอบเป็นหลัก)</p>
-                                    <div class="p-3 bg-yellow-100 border-l-4 border-yellow-400 text-yellow-800 rounded-r-lg text-sm">
-                                        <h4 class="font-bold">หมายเหตุ (เขตพื้นที่บริการ)</h4>
-                                        <p>ต้องมีชื่ออยู่ในทะเบียนบ้านในเขตพื้นที่บริการของโรงเรียนอย่างน้อย 2 ปี (นับถึง 16 พ.ค.)</p>
+                                <div class="mt-8 pt-6 border-t border-gray-200">
+                                    <h3 class="font-bold text-gray-800 text-xl flex items-center gap-2 mb-4">
+                                        <i class="fas fa-user-check text-green-500"></i>คุณสมบัติ
+                                    </h3>
+                                    <p class="text-gray-600 mb-4 text-lg">ไม่ได้ระบุเกรดเฉลี่ยขั้นต่ำ (พิจารณาคะแนนสอบเป็นหลัก)</p>
+                                    <div class="p-4 bg-yellow-100 border-l-4 border-yellow-400 text-yellow-800 rounded-r-lg">
+                                        <h4 class="font-bold text-lg">หมายเหตุ (เขตพื้นที่บริการ)</h4>
+                                        <p class="mt-2">ต้องมีชื่ออยู่ในทะเบียนบ้านในเขตพื้นที่บริการของโรงเรียนอย่างน้อย 2 ปี (นับถึง 16 พ.ค.)</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- เนื้อหา เอกสาร (ปกติ) -->
                         <div id="normal-docs" class="nested-tab-content hidden-content">
-                            <h2 class="text-2xl font-semibold mb-6 text-pink-700 text-center">🍀 เอกสารสมัคร (ห้องเรียนปกติ)</h2>
+                            <h2 class="text-2xl font-semibold mb-6 text-red-700 text-center">🍀 เอกสารสมัคร (ห้องเรียนปกติ)</h2>
                             <!-- Info Card -->
-                            <div class="info-card max-w-2xl mx-auto bg-gray-50">
+                            <div class="info-card max-w-2xl mx-auto">
                                 <ol class="space-y-4 text-gray-700">
-                                    <li class="list-item"><i class="fas fa-camera list-icon"></i><span> รูปถ่าย 1 นิ้ว (ไม่เกิน 6 เดือน) <span class="font-bold text-pink-600 ml-2">จำนวน 4 รูป</span></span></li>
-                                    <li class="list-item"><i class="fas fa-id-card list-icon"></i><span> สำเนาทะเบียนบ้าน (นักเรียน)</span></li>
-                                    <li class="list-item"><i class="fas fa-users list-icon"></i><span> สำเนาทะเบียนบ้าน (ผู้ปกครอง)</span></li>
-                                    <li class="list-item"><i class="fas fa-award list-icon"></i><span> สำเนารับรองการศึกษา ป.6 (ปพ.1 หรือ ปพ.7)</span></li>
-                                    <li class="list-item"><i class="fas fa-chart-bar list-icon"></i><span> สำเนาระเบียนแสดงผลการเรียน (ปพ.1 หรือ ปพ.6)</span></li>
-                                    <li class="list-item"><i class="fas fa-file-alt list-icon"></i><span> เอกสารอื่นๆ (ถ้ามี) เช่น ใบเปลี่ยนชื่อ-สกุล</span></li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-camera text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>รูปถ่าย 1 นิ้ว (ไม่เกิน 6 เดือน) <span class="font-bold text-red-600 ml-2">จำนวน 4 รูป</span></span>
+                                    </li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-id-card text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>สำเนาทะเบียนบ้าน (นักเรียน)</span>
+                                    </li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-users text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>สำเนาทะเบียนบ้าน (ผู้ปกครอง)</span>
+                                    </li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-award text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>สำเนารับรองการศึกษา ป.6 (ปพ.1 หรือ ปพ.7)</span>
+                                    </li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-chart-bar text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>สำเนาระเบียนแสดงผลการเรียน (ปพ.1 หรือ ปพ.6)</span>
+                                    </li>
+                                    <li class="flex items-start p-3 bg-gray-50 rounded-xl">
+                                        <i class="fas fa-file-alt text-red-500 mt-1 mr-3 text-lg"></i>
+                                        <span>เอกสารอื่นๆ (ถ้ามี) เช่น ใบเปลี่ยนชื่อ-สกุล</span>
+                                    </li>
                                 </ol>
-                                <div class="mt-6 pt-4 border-t border-pink-100">
-                                    <h4 class="font-bold text-blue-700">เพิ่มเติม (นักเรียนในเขตพื้นที่บริการ)</h4>
-                                    <ul class="list-disc list-inside mt-2 text-sm text-blue-900">
+                                <div class="mt-6 p-4 bg-blue-50 rounded-xl">
+                                    <h4 class="font-bold text-blue-700 text-lg">เพิ่มเติม (นักเรียนในเขตพื้นที่บริการ)</h4>
+                                    <ul class="list-disc list-inside mt-2 text-blue-900">
                                         <li>สำเนาทะเบียนบ้านหน้า 18</li>
                                         <li>หนังสือรับรองการอยู่อาศัยจริง</li>
                                         <li>สำเนาบัตรประชาชนของเจ้าบ้าน</li>
@@ -656,16 +800,49 @@
                         </div>
                     </div>
                 </div>
+                
                 <!-- === การเตรียมตัว === -->
                 <div id="preparation-main" class="main-tab-content hidden-content">
                     <div class="nested-content-container">
-                        <h2 class="text-2xl font-semibold mb-6 text-pink-700">🚀 เทคนิคเตรียมตัวสอบเข้าสตรีวิทยา</h2>
-                        <div class="grid md:grid-cols-2 gap-6 text-gray-700">
+                        <h2 class="text-2xl font-semibold mb-6 text-red-700 text-center">🚀 เทคนิคเตรียมตัวสอบเข้าสตรีวิทยา</h2>
+                        <div class="grid md:grid-cols-2 gap-6">
                             <!-- Info Card -->
-                            <div class="info-card flex items-start space-x-4 bg-blue-50"><div class="text-3xl text-blue-500 pt-1"><i class="fas fa-bullseye"></i></div><div><h3 class="font-bold text-blue-800">1. รู้ลึก รู้จริงเรื่องแนวข้อสอบ</h3><p>ศึกษารายละเอียดวิชาที่สอบ หาข้อสอบเก่ามาฝึกทำเพื่อจับแนวทางและสไตล์ของข้อสอบ</p></div></div>
-                            <div class="info-card flex items-start space-x-4 bg-green-50"><div class="text-3xl text-green-500 pt-1"><i class="fas fa-calendar-alt"></i></div><div><h3 class="font-bold text-green-800">2. วางแผนการอ่านหนังสือ</h3><p>จัดตารางเวลาให้ชัดเจน แบ่งเนื้อหาที่ต้องทบทวนในแต่ละวัน ไม่ควรอัดอ่านตอนใกล้สอบ</p></div></div>
-                            <div class="info-card flex items-start space-x-4 bg-yellow-50"><div class="text-3xl text-yellow-600 pt-1"><i class="fas fa-stopwatch"></i></div><div><h3 class="font-bold text-yellow-800">3. ฝึกทำโจทย์และจับเวลา</h3><p>ความเร็วเป็นสิ่งสำคัญ ฝึกทำข้อสอบโดยจับเวลาเหมือนสอบจริง จะช่วยให้บริหารเวลาในห้องสอบได้ดีขึ้น</p></div></div>
-                            <div class="info-card flex items-start space-x-4 bg-red-50"><div class="text-3xl text-red-500 pt-1"><i class="fas fa-heartbeat"></i></div><div><h3 class="font-bold text-red-800">4. ดูแลสุขภาพกายและใจ</h3><p>พักผ่อนให้เพียงพอ ทานอาหารที่มีประโยชน์ และหาเวลาผ่อนคลาย เพื่อให้สมองปลอดโปร่ง</p></div></div>
+                            <div class="info-card flex items-start">
+                                <div class="text-4xl text-blue-500 pt-1 mr-4">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-blue-700 text-lg mb-2">1. รู้ลึก รู้จริงเรื่องแนวข้อสอบ</h3>
+                                    <p class="text-gray-700">ศึกษารายละเอียดวิชาที่สอบ หาข้อสอบเก่ามาฝึกทำเพื่อจับแนวทางและสไตล์ของข้อสอบ</p>
+                                </div>
+                            </div>
+                            <div class="info-card flex items-start">
+                                <div class="text-4xl text-green-500 pt-1 mr-4">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-green-700 text-lg mb-2">2. วางแผนการอ่านหนังสือ</h3>
+                                    <p class="text-gray-700">จัดตารางเวลาให้ชัดเจน แบ่งเนื้อหาที่ต้องทบทวนในแต่ละวัน ไม่ควรอัดอ่านตอนใกล้สอบ</p>
+                                </div>
+                            </div>
+                            <div class="info-card flex items-start">
+                                <div class="text-4xl text-yellow-600 pt-1 mr-4">
+                                    <i class="fas fa-stopwatch"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-yellow-700 text-lg mb-2">3. ฝึกทำโจทย์และจับเวลา</h3>
+                                    <p class="text-gray-700">ความเร็วเป็นสิ่งสำคัญ ฝึกทำข้อสอบโดยจับเวลาเหมือนสอบจริง จะช่วยให้บริหารเวลาในห้องสอบได้ดีขึ้น</p>
+                                </div>
+                            </div>
+                            <div class="info-card flex items-start">
+                                <div class="text-4xl text-red-500 pt-1 mr-4">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-red-700 text-lg mb-2">4. ดูแลสุขภาพกายและใจ</h3>
+                                    <p class="text-gray-700">พักผ่อนให้เพียงพอ ทานอาหารที่มีประโยชน์ และหาเวลาผ่อนคลาย เพื่อให้สมองปลอดโปร่ง</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -678,6 +855,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>เกี่ยวกับเรา</h3>
+                <p>ครอบครัวยอดนารี❤️สตรีวิทยา</p>
                 <p>จัดทำโดย.. ลุ้นสอวอไปด้วยกันนะ</p>
             </div>
             
@@ -692,7 +870,7 @@
         
         <div class="footer-bottom">
             <p>ข้อมูลอ้างอิงตามประกาศรับสมัครปีการศึกษา 2568 (โปรดตรวจสอบประกาศจากโรงเรียนอีกครั้ง)</p>
-            <p>© 2024 เตรียมสอบเข้า ม.1 โรงเรียนสตรีวิทยา. All rights reserved.</p>
+            <p>© 2024 ครอบครัวยอดนารี❤️สตรีวิทยา. All rights reserved.</p>
         </div>
     </footer>
 
